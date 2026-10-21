@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "active_task": {
+    "task_id": "neurooptic-aikit-integration",
+    "last_phase": "phase 4",
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1792615562.0527933
+  },
+  "checkpoints": [
+    {
+      "task_id": "neurooptic-aikit-integration",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/4] plan: hygiene repairs, README cold-start restructure, engine unit tests, git start",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1792614962.5249221,
+      "timestamp_str": "2026-10-21 23:36:02",
+      "impact_assessment": {
+        "why": "NeuroOptic was attached to AIKit with no tests and failing hygiene and structure gates; failing work stays undeliverable and uninsurable against regressions.",
+        "benefits": "all four project gates pass; the engine frequency, phase and sham math gains a regression shield; README becomes cold-start ready; the project gets its own git repository with committed AIKit memory.",
+        "risks": "contract: none - no public signature, CLI flag or file format changes; dependency: none - glfw and PyOpenGL are already declared in requirements.txt and now installed; concurrency: none - single-threaded render path untouched; state: session CSV and MATLAB loader output gain explicit utf-8 encoding, changing bytes only on non-UTF-8 locales.",
+        "mitigation": "keep every edit inside the gate findings; unit tests pin the pure math (Nyquist validation, phase accumulation, waveform signals, sham determinism); the full gate suite reruns after implementation before the initial commit."
+      }
+    },
+    {
+      "task_id": "neurooptic-aikit-integration",
+      "phase": "phase 3",
+      "phase_num": 3,
+      "description": "[2/4] implementation: encoding= on 3 open() calls, typed CSV row skip, logged GPU-timer except, dead freq_std and TODO marker removed, Popen allow marker, stale requirements.txt.py deleted, README cold-start restructure, 16 unit tests added",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1792615338.7165732,
+      "timestamp_str": "2026-10-21 23:42:18"
+    },
+    {
+      "task_id": "neurooptic-aikit-integration",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[3/4] verification: 4/4 gates passed (test, hygiene, guidelines, secrets); checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1792615562.0527933,
+      "timestamp_str": "2026-10-21 23:46:02"
+    }
+  ]
+}

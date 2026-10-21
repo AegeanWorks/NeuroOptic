@@ -4,6 +4,36 @@
   <img src="https://github.com/Aegean-E/NeuroOptic/blob/main/banner.jpg?raw=true" alt="NeuroOptic Banner" width="1200">
 </p>
 
+## ⚡ 30-Second Cold-Start Quick Reference
+
+- **Runtime Prerequisites**: Python 3.10+ with `glfw`, `PyOpenGL`, `numpy` and `customtkinter` (see `requirements.txt`).
+- **Canonical Regression Shield Gate**:
+  ```bash
+  python -m unittest discover
+  ```
+
+### 🛠️ AIKit Commands (run from the AIKit folder)
+| Role | Command |
+|---|---|
+| Status, task and gates | `python aikit.py status NeuroOptic` |
+| Phase 4: every gate | `python aikit.py check NeuroOptic` |
+| Repair memory and map, then check | `python aikit.py fix NeuroOptic` |
+| Resume an interrupted task | `python aikit.py resume NeuroOptic` |
+
+## 📦 What's Inside
+
+```text
+NeuroOptic/
+├── .gitignore                 <- transient AIKit state excluded
+├── README.md
+├── banner.jpg
+├── entrainment_engine.py      <- GLFW/OpenGL entrainment engine and CLI
+├── launcher.py                <- customtkinter GUI controller
+├── requirements.txt
+├── test_entrainment_engine.py <- unit tests for the engine's pure logic
+└── .aikit/                    <- this project's memory: record, ledger, decisions, map
+```
+
 ## Generalized Visual Entrainment Engine
 
 NeuroOptic is a research-grade visual oscillator designed for precise brainwave entrainment. It supports configurable frequencies (1–120 Hz) with hardware-aware safety limits and drift-free phase accumulation.

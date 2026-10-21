@@ -334,12 +334,12 @@ class StimulusRenderer:
         """Loads a CSV (Input, Output) and creates a 1D Texture LUT."""
         try:
             data = []
-            with open(filepath, 'r') as f:
+            with open(filepath, 'r', encoding='utf-8') as f:
                 reader = csv.reader(f)
                 for row in reader:
                     try:
                         data.append(float(row[1])) # Assuming Col 0=Input, Col 1=Output
-                    except: continue
+                    except (ValueError, IndexError): continue
             
             if not data: return
             
@@ -367,7 +367,8 @@ class StimulusRenderer:
             available = glGetQueryObjectiv(self.query, GL_QUERY_RESULT_AVAILABLE)
             if available:
                 return glGetQueryObjectuiv(self.query, GL_QUERY_RESULT)
-        except: pass
+        except Exception as e:
+            logger.debug(f"GPU timer query read failed: {e}")
         return 0
 
     def render(self, phase_l, c_phase_l, phase_r, c_phase_r, 
@@ -767,7 +768,6 @@ class EntrainmentEngine:
         crossing_indices = np.where(crossings)[0]
 
         measured_freq = 0.0
-        freq_std = 0.0
 
         if len(crossing_indices) > 1:
             t_start = timestamps[crossing_indices[0]]
@@ -778,9 +778,6 @@ class EntrainmentEngine:
             if duration > 0:
                 # Correction: N crossings define N-1 intervals
                 measured_freq = ((len(crossing_indices) - 1) / 2.0) / duration
-
-            # Calculate cycle-to-cycle consistency (Std Dev)
-            # TODO: Detailed cycle-by-cycle analysis could be added here
 
         logger.info("=== Session Integrity Report ===")
         logger.info(f"Total Frames: {len(deltas)}")
@@ -818,7 +815,7 @@ class EntrainmentEngine:
         filename = f"session_data/neurooptic_session_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
 
         try:
-            with open(filename, 'w', newline='') as csvfile:
+            with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
                 writer = csv.writer(csvfile)
                 
                 # 12️⃣ Log More Metadata (Header Block)
@@ -873,7 +870,7 @@ class EntrainmentEngine:
     def generate_matlab_loader(self, csv_path):
         m_path = csv_path.replace('.csv', '.m')
         try:
-            with open(m_path, 'w') as f:
+            with open(m_path, 'w', encoding='utf-8') as f:
                 f.write(f"% NeuroOptic Session Loader (PTB Compatibility Mode)\n")
                 f.write(f"% Generated: {datetime.now()}\n\n")
                 f.write(f"fname = '{os.path.basename(csv_path)}';\n")

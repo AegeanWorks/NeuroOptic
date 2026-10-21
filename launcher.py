@@ -175,7 +175,7 @@ class NeuroOpticLauncher:
         try:
             # Launch as a separate subprocess
             # We do not wait for it to finish, so the GUI remains responsive
-            subprocess.Popen(cmd)
+            subprocess.Popen(cmd)  # hygiene: allow fire-and-forget launch; the engine must outlive the launcher
         except Exception as e:
             messagebox.showerror("Launch Error", str(e))
 

@@ -28,6 +28,8 @@
 NeuroOptic/
 ├── .gitignore                 <- transient AIKit state excluded
 ├── README.md
+├── COMMERCIAL.md
+├── LICENSE
 ├── banner.jpg
 ├── entrainment_engine.py      <- GLFW/OpenGL entrainment engine and CLI
 ├── launcher.py                <- customtkinter GUI controller

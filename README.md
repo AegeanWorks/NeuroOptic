@@ -1,6 +1,6 @@
 # NeuroOptic
 
-[![AIKit Integrated](https://img.shields.io/badge/AIKit-integrated-6f42c1)](https://github.com/Aegean-E/AIKit)
+[![AIKit Integrated](https://img.shields.io/badge/AIKit-integrated-6f42c1)](https://github.com/AegeanWorks/AIKit)
 
 <p align="center">
   <img src="https://github.com/Aegean-E/NeuroOptic/blob/main/banner.jpg?raw=true" alt="NeuroOptic Banner" width="1200">
@@ -30,6 +30,8 @@ NeuroOptic/
 ├── README.md
 ├── COMMERCIAL.md
 ├── LICENSE
+├── LICENSES/                 <- REUSE license texts
+├── REUSE.toml                <- Machine-readable SPDX metadata
 ├── banner.jpg
 ├── entrainment_engine.py      <- GLFW/OpenGL entrainment engine and CLI
 ├── launcher.py                <- customtkinter GUI controller
@@ -103,3 +105,9 @@ python entrainment_engine.py --freq 40.0 --sham detune
 # Session Control (10 min session, 5s ramp-up)
 python entrainment_engine.py --duration 600 --ramp 5.0
 ```
+
+> **License history:** versions up to and including `agpl-final` remain available under GNU AGPL-3.0.
+
+## 📜 License
+
+Free for personal use under the Aegean License 1.1 (AL-1.1); see [LICENSE](LICENSE). Any commercial use needs the Aegean Commercial License 1.0 (ACL-1.0); see [COMMERCIAL.md](COMMERCIAL.md).

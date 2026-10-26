@@ -6,6 +6,9 @@
   <img src="https://github.com/Aegean-E/NeuroOptic/blob/main/banner.jpg?raw=true" alt="NeuroOptic Banner" width="1200">
 </p>
 
+NeuroOptic is a research-grade visual oscillator for brainwave entrainment: configurable 1-120 Hz
+frequencies, hardware-aware safety limits and drift-free phase accumulation.
+
 ## ⚡ 30-Second Cold-Start Quick Reference
 
 - **Runtime Prerequisites**: Python 3.10+ with `glfw`, `PyOpenGL`, `numpy` and `customtkinter` (see `requirements.txt`).
@@ -105,8 +108,6 @@ python entrainment_engine.py --freq 40.0 --sham detune
 # Session Control (10 min session, 5s ramp-up)
 python entrainment_engine.py --duration 600 --ramp 5.0
 ```
-
-> **License history:** versions up to and including `agpl-final` remain available under GNU AGPL-3.0.
 
 ## 📜 License
 

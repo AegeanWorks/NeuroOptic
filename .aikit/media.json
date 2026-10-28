@@ -14,40 +14,20 @@
   "layout": "left",
   "assets": {
     "logo": {
-      "path": "assets/logo.png",
-      "status": "approved",
-      "commit": "",
-      "generated_at": "2026-10-28T13:53:33",
-      "review": {
-        "status": "approved",
-        "reviewer": "subagent:brand-review",
-        "method": "vision",
-        "notes": "NO monogram (correct NeuroOptic initials), NEUROTECH eyebrow, title-case Neuro Optic single line. Optic/target artwork fits psychoacoustic and visual stimulation.",
-        "score": 84,
-        "reviewed_at": "2026-10-28T14:00:00"
-      }
-    },
-    "social_preview": {
-      "path": "assets/social-preview.png",
-      "status": "approved",
-      "commit": "",
-      "generated_at": "2026-10-28T13:53:33",
-      "review": {
-        "status": "approved",
-        "reviewer": "subagent:brand-review",
-        "method": "vision",
-        "notes": "Title 'Neuro Optic' crisp; tagline 'Psychoacoustic and visual stimulation, safely bounded.' complete; chips readable; URL legible; concentric-ring stimulation graphic fits psychoacoustic/visual theme; no clipping.",
-        "score": 92,
-        "reviewed_at": "2026-10-28T14:00:00"
-      }
-    },
-    "artwork": {
-      "path": "assets/artwork.jpg",
+      "path": "assets/logo.jpg",
       "status": "pending_review",
       "commit": "",
-      "generated_at": "2026-10-28T13:46:05",
+      "generated_at": "2026-10-28T15:59:21",
+      "review": null
+    },
+    "social_preview": {
+      "path": "assets/social-preview.jpg",
+      "status": "pending_review",
+      "commit": "",
+      "generated_at": "2026-10-28T15:59:21",
       "review": null
     }
   },
-  "screenshots": []
+  "screenshots": [],
+  "model": "community/scriptsnsenses-sys/flux-2-dev-free"
 }

@@ -3,5 +3,52 @@
   "name": "neurooptic",
   "test_command": null,
   "gates": {},
-  "created": "2026-10-21"
+  "created": "2026-10-21",
+  "has_ui": true,
+  "ui_kind": "desktop",
+  "ui_evidence": [
+    "requirements.txt"
+  ],
+  "ui_checked_at": "2026-10-28",
+  "ui_source": "detected",
+  "topics": [
+    "aikit",
+    "brainwave-entrainment",
+    "customtkinter",
+    "desktop-app",
+    "neuroscience",
+    "neurotech",
+    "opengl",
+    "python",
+    "visual-oscillator",
+    "source-available",
+    "aegeanworks",
+    "gui",
+    "psychoacoustics",
+    "signal-processing",
+    "software",
+    "user-interface",
+    "visual-stimulation",
+    "desktop-application",
+    "visualization",
+    "real-time"
+  ],
+  "topics_source": "ai:kilo:2026-10-27",
+  "topics_reviewed_at": "2026-10-28",
+  "topics_choice": [
+    "aegeanworks",
+    "software",
+    "user-interface",
+    "desktop-app",
+    "gui",
+    "psychoacoustics",
+    "visual-stimulation",
+    "signal-processing"
+  ],
+  "topics_choice_round2": [
+    "desktop-application",
+    "visualization",
+    "psychoacoustics",
+    "real-time"
+  ]
 }

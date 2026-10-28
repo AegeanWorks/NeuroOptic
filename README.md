@@ -39,7 +39,6 @@ NeuroOptic/
 ├── LICENSE
 ├── LICENSES/                 <- REUSE license texts
 ├── REUSE.toml                <- Machine-readable SPDX metadata
-├── banner.jpg
 ├── entrainment_engine.py      <- GLFW/OpenGL entrainment engine and CLI
 ├── launcher.py                <- customtkinter GUI controller
 ├── requirements.txt

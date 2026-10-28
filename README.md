@@ -1,14 +1,13 @@
 # NeuroOptic
 
 <!-- aegean:media:start -->
-<p align="center"><img src="assets/logo.jpg" alt="NeuroOptic logo" width="96" height="96"></p>
-<p align="center"><img src="assets/social-preview.png" alt="NeuroOptic social preview" width="100%"></p>
+<p align="center"><img src="assets/social-preview.jpg" alt="NeuroOptic social preview" width="100%"></p>
+*Brand assets are generated and may not fully represent the project scope.*
 <!-- aegean:media:end -->
 
 [![AIKit Integrated](https://img.shields.io/badge/AIKit-integrated-6f42c1)](https://github.com/AegeanWorks/AIKit)
 
 <p align="center">
-  <img src="https://github.com/Aegean-E/NeuroOptic/blob/main/banner.jpg?raw=true" alt="NeuroOptic Banner" width="1200">
 </p>
 
 NeuroOptic is a research-grade visual oscillator for brainwave entrainment: configurable 1-120 Hz

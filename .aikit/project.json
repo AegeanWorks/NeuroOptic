@@ -13,6 +13,9 @@
   "ui_source": "detected",
   "topics": [
     "aikit",
+    "source-available",
+    "aegean-license",
+    "commercial-license",
     "brainwave-entrainment",
     "customtkinter",
     "desktop-app",
@@ -21,16 +24,13 @@
     "opengl",
     "python",
     "visual-oscillator",
-    "source-available",
     "aegeanworks",
     "gui",
     "psychoacoustics",
     "signal-processing",
-    "software",
     "user-interface",
     "visual-stimulation",
     "desktop-application",
-    "visualization",
     "real-time"
   ],
   "topics_source": "ai:kilo:2026-10-27",
@@ -50,5 +50,10 @@
     "visualization",
     "psychoacoustics",
     "real-time"
+  ],
+  "license_topics": [
+    "source-available",
+    "aegean-license",
+    "commercial-license"
   ]
 }

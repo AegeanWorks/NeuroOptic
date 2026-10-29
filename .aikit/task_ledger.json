@@ -1,47 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "neurooptic-reforge-followup",
+    "task_id": "neurooptic-ui-contract",
     "last_phase": "phase 4",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1793292919.1520822,
+    "updated_at": 1793293124.102939,
     "owner": "opencode:reforge-followup",
     "started_by": "opencode:reforge-followup",
     "continuations": [],
-    "completed_at": 1793292919.7492092
+    "completed_at": 1793293124.7558095
   },
   "checkpoints": [
-    {
-      "task_id": "neurooptic-aikit-integration",
-      "phase": "phase 3",
-      "phase_num": 3,
-      "description": "[2/4] implementation: encoding= on 3 open() calls, typed CSV row skip, logged GPU-timer except, dead freq_std and TODO marker removed, Popen allow marker, stale requirements.txt.py deleted, README cold-start restructure, 16 unit tests added",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1792615338.7165732,
-      "timestamp_str": "2026-10-21 23:42:18"
-    },
-    {
-      "task_id": "neurooptic-aikit-integration",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[3/4] verification: 4/4 gates passed (test, hygiene, guidelines, secrets); checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1792615562.0527933,
-      "timestamp_str": "2026-10-21 23:46:02"
-    },
-    {
-      "task_id": "neurooptic-aikit-integration",
-      "phase": "phase 5",
-      "phase_num": 5,
-      "description": "[4/5] delivery: initial commit de4eca5 on master, 12 files, check --strict 4/4 gates passed; checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1792615751.6961153,
-      "timestamp_str": "2026-10-21 23:49:11"
-    },
     {
       "task_id": "neurooptic-aikit-integration",
       "phase": "completed",
@@ -253,6 +223,44 @@
       "status": "completed",
       "timestamp": 1793292919.7492115,
       "timestamp_str": "2026-10-29 19:55:19",
+      "agent": "opencode:reforge-followup"
+    },
+    {
+      "task_id": "neurooptic-ui-contract",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/2] Add the launcher UI contract and sync the canonical AL-1.1 text",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793293108.925621,
+      "timestamp_str": "2026-10-29 19:58:28",
+      "agent": "opencode:reforge-followup",
+      "impact_assessment": {
+        "why": "The project has a desktop UI, but the auto-generated contract used requirements.txt as its surface and was removed; the license text also drifted from the canonical AL-1.1 copy.",
+        "benefits": "The UI guard now targets the real launcher surface, the check warning about a missing contract disappears, and the license matches licenses/AL-1.1.md.",
+        "risks": "contract: .aikit/ui.json surface app -> launcher.py; dependency: none; concurrency: none; state: UI contract and license text only",
+        "mitigation": "Run the fast unittest proof and all four project gates, compare LICENSE with licenses/AL-1.1.md, and inspect the staged diff before committing."
+      }
+    },
+    {
+      "task_id": "neurooptic-ui-contract",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/2] Phase 4: checklists: passed; 4/4 project gates",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793293124.102939,
+      "timestamp_str": "2026-10-29 19:58:44",
+      "agent": "opencode:reforge-followup"
+    },
+    {
+      "task_id": "neurooptic-ui-contract",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'neurooptic-ui-contract' completed successfully.",
+      "status": "completed",
+      "timestamp": 1793293124.7558112,
+      "timestamp_str": "2026-10-29 19:58:44",
       "agent": "opencode:reforge-followup"
     }
   ]

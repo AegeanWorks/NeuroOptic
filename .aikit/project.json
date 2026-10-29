@@ -11,6 +11,7 @@
   ],
   "ui_checked_at": "2026-10-29",
   "ui_source": "detected",
+  "ui_required": true,
   "topics": [
     "aikit",
     "aikit-integrated",

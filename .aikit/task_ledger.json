@@ -1,26 +1,22 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "neurooptic-ui-contract",
-    "last_phase": "phase 4",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1793293124.102939,
+    "task_id": "neurooptic-ui-evidence",
+    "last_phase": "phase 2",
+    "active_phase": 2,
+    "status": "in_progress",
+    "updated_at": 1793293271.101055,
     "owner": "opencode:reforge-followup",
     "started_by": "opencode:reforge-followup",
     "continuations": [],
-    "completed_at": 1793293124.7558095
+    "impact_assessment": {
+      "why": "The UI contract now targets launcher.py, but strict delivery evidence is still off, so a UI change could ship without a finished, reviewed UI task.",
+      "benefits": "Delivery will require a UI task whose surface digest matches launcher.py, closing the last warning and making UI drift visible.",
+      "risks": "contract: ui_required becomes true; dependency: none; concurrency: none; state: .aikit/project.json, .aikit/ui_task.json and .aikit/ui_history.json",
+      "mitigation": "Begin from a clean baseline, run the fast unittest proof, record a real human review of the launcher, then rerun check --strict before pushing."
+    }
   },
   "checkpoints": [
-    {
-      "task_id": "neurooptic-aikit-integration",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'neurooptic-aikit-integration' completed successfully.",
-      "status": "completed",
-      "timestamp": 1792615751.8864603,
-      "timestamp_str": "2026-10-21 23:49:11"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 1",
@@ -262,6 +258,23 @@
       "timestamp": 1793293124.7558112,
       "timestamp_str": "2026-10-29 19:58:44",
       "agent": "opencode:reforge-followup"
+    },
+    {
+      "task_id": "neurooptic-ui-evidence",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/2] Enable strict UI evidence and finish a reviewed launcher UI task",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793293271.101055,
+      "timestamp_str": "2026-10-29 20:01:11",
+      "agent": "opencode:reforge-followup",
+      "impact_assessment": {
+        "why": "The UI contract now targets launcher.py, but strict delivery evidence is still off, so a UI change could ship without a finished, reviewed UI task.",
+        "benefits": "Delivery will require a UI task whose surface digest matches launcher.py, closing the last warning and making UI drift visible.",
+        "risks": "contract: ui_required becomes true; dependency: none; concurrency: none; state: .aikit/project.json, .aikit/ui_task.json and .aikit/ui_history.json",
+        "mitigation": "Begin from a clean baseline, run the fast unittest proof, record a real human review of the launcher, then rerun check --strict before pushing."
+      }
     }
   ]
 }

@@ -5,10 +5,6 @@
 <p align="center"><a href="LICENSE"><img src="https://img.shields.io/badge/license-AL--1.1-2f9e44" alt="License"></a> <a href="https://github.com/AegeanWorks/AIKit"><img src="https://img.shields.io/badge/AIKit-integrated-6f42c1" alt="AIKit Integrated"></a></p>
 <!-- aegean:media:end -->
 
-
-<p align="center">
-</p>
-
 NeuroOptic is a research-grade visual oscillator for brainwave entrainment: configurable 1-120 Hz
 frequencies, hardware-aware safety limits and drift-free phase accumulation.
 
@@ -34,6 +30,7 @@ frequencies, hardware-aware safety limits and drift-free phase accumulation.
 NeuroOptic/
 ├── .gitignore                 <- transient AIKit state excluded
 ├── README.md
+├── assets/
 ├── COMMERCIAL.md
 ├── LICENSE
 ├── LICENSES/                 <- REUSE license texts

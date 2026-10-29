@@ -77,7 +77,7 @@ class FrequencyManager:
         FrequencyBand("Delta", 1, 4),
         FrequencyBand("Theta", 4, 8),
         FrequencyBand("Alpha", 8, 12),
-        FrequencyBand("Beta", 13, 30),
+        FrequencyBand("Beta", 12, 30),
         FrequencyBand("Gamma", 30, 80),
         FrequencyBand("High Gamma", 80, 120),
     ]
@@ -336,12 +336,18 @@ class StimulusRenderer:
             data = []
             with open(filepath, 'r', encoding='utf-8') as f:
                 reader = csv.reader(f)
-                for row in reader:
+                # Row 1 is the header; a malformed later row is reported, not silently dropped.
+                for line_number, row in enumerate(reader, 1):
                     try:
-                        data.append(float(row[1])) # Assuming Col 0=Input, Col 1=Output
-                    except (ValueError, IndexError): continue
+                        data.append(float(row[1]))  # Assuming Col 0=Input, Col 1=Output
+                    except (ValueError, IndexError):
+                        if line_number > 1:
+                            logger.warning(
+                                f"Skipping malformed calibration row {line_number} in {filepath}: {row!r}")
             
-            if not data: return
+            if not data:
+                logger.warning(f"Calibration file has no usable rows: {filepath}")
+                return
             
             # Create Texture
             lut_data = np.array(data, dtype=np.float32)
@@ -685,7 +691,7 @@ class EntrainmentEngine:
             logged_luminance = raw_signal * amp_l
 
             # Record Metric (Skip first frame initialization delta)
-            if frame_count > 0:
+            if self.frame_data or frame_count > 0:
                 self.frame_data.append((current_time, delta_time, logged_luminance, last_gpu_time_ns))
 
             # 4. Render

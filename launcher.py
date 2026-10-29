@@ -136,10 +136,10 @@ class NeuroOpticLauncher:
             self.freq_var.set(10.0)
         elif "Beta" in selection:
             self.freq_var.set(20.0)
-        elif "Gamma" in selection:
-            self.freq_var.set(40.0)
         elif "High Gamma" in selection:
             self.freq_var.set(80.0)
+        elif "Gamma" in selection:
+            self.freq_var.set(40.0)
 
     def launch_engine(self):
         # Construct arguments

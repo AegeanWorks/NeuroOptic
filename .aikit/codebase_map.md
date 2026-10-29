@@ -7,10 +7,10 @@
 
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `3`
-- **Total Classes**: `14`
+- **Total Classes**: `15`
 - **Total Top-Level Functions**: `1`
-- **Total Class Methods**: `45`
-- **Total Source Lines**: `1374`
+- **Total Class Methods**: `50`
+- **Total Source Lines**: `1425`
 
 ---
 
@@ -19,7 +19,7 @@
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
 
-**Size**: `1070` lines (`42603` bytes)
+**Size**: `1076` lines (`43032` bytes)
 
 **Classes:**
 - `class WaveformType`
@@ -75,11 +75,12 @@
 ### [`test_entrainment_engine.py`](test_entrainment_engine.py)
 > *Regression shield for NeuroOptic's pure engine logic; no window or GL context is needed.*
 
-**Size**: `118` lines (`5593` bytes)
+**Size**: `163` lines (`7414` bytes)
 
 **Classes:**
 - `class FrequencyManagerTests`
   - Method `.test_band_names_cover_preset_ranges()`
+  - Method `.test_band_name_covers_alpha_beta_boundary()`
   - Method `.test_frequency_above_nyquist_limit_is_rejected()`
   - Method `.test_non_positive_frequency_is_rejected()`
   - Method `.test_square_with_non_integer_frames_switches_to_sine()`
@@ -98,6 +99,11 @@
 - `class ShamControlTests`
   - Method `.test_static_sham_zeroes_frequency()`
   - Method `.test_detune_sham_shifts_frequency_deterministically()`
+- `class CalibrationLoaderTests`
+  - Method `._renderer_without_gl()`
+  - Method `._write(text)`
+  - Method `.test_malformed_row_is_warned_and_skipped()`
+  - Method `.test_file_without_usable_rows_is_reported()`
 - `class ArgumentParsingTests`
   - Method `.test_defaults_match_documented_values()`
 

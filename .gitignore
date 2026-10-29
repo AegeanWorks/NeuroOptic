@@ -3,6 +3,8 @@
 .aikit/*.bak
 .aikit/*.tmp_*
 .aikit/*.corrupt_*
+# Reforge review packets are regenerable evidence
+.aikit/reforge.reviews/
 
 # Python bytecode
 __pycache__/
@@ -10,3 +12,6 @@ __pycache__/
 
 # Runtime session output
 session_data/
+# AIKit transient state
+*.py[cod]
+node_modules/

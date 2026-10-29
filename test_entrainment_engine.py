@@ -1,9 +1,12 @@
 """Regression shield for NeuroOptic's pure engine logic; no window or GL context is needed."""
 
 import math
+import os
 import random
 import sys
+import tempfile
 import unittest
+from unittest import mock
 
 import entrainment_engine as engine
 
@@ -14,6 +17,9 @@ class FrequencyManagerTests(unittest.TestCase):
         self.assertEqual(engine.FrequencyManager.get_band_name(10.0), "Alpha")
         self.assertEqual(engine.FrequencyManager.get_band_name(40.0), "Gamma")
         self.assertEqual(engine.FrequencyManager.get_band_name(150.0), "Custom")
+
+    def test_band_name_covers_alpha_beta_boundary(self):
+        self.assertEqual(engine.FrequencyManager.get_band_name(12.5), "Beta")
 
     def test_frequency_above_nyquist_limit_is_rejected(self):
         with self.assertRaises(ValueError):
@@ -98,6 +104,45 @@ class ShamControlTests(unittest.TestCase):
                                         sham_type=engine.ShamType.DETUNE, sham_seed=3)
         self.assertNotEqual(subject.target_freq, 40.0)
         self.assertEqual(subject.target_freq, twin.target_freq)
+
+
+class CalibrationLoaderTests(unittest.TestCase):
+    def _renderer_without_gl(self):
+        renderer = engine.StimulusRenderer()
+        for name, kwargs in (
+            ("glGenTextures", {"return_value": 1}),
+            ("glBindTexture", {}),
+            ("glTexParameteri", {}),
+            ("glTexImage1D", {}),
+        ):
+            patcher = mock.patch.object(engine, name, **kwargs)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        return renderer
+
+    def _write(self, text):
+        with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False,
+                                         encoding="utf-8", newline="") as handle:
+            handle.write(text)
+            path = handle.name
+        self.addCleanup(os.unlink, path)
+        return path
+
+    def test_malformed_row_is_warned_and_skipped(self):
+        renderer = self._renderer_without_gl()
+        path = self._write("Input,Output\n0.0,0.1\n0.5,bad\n1.0,0.9\n")
+        with self.assertLogs(engine.logger, level="WARNING") as logs:
+            renderer.load_calibration(path)
+        self.assertTrue(renderer.lut_active)
+        self.assertTrue(any("Skipping malformed calibration row 3" in line for line in logs.output))
+
+    def test_file_without_usable_rows_is_reported(self):
+        renderer = self._renderer_without_gl()
+        path = self._write("Input,Output\nbad,data\n")
+        with self.assertLogs(engine.logger, level="WARNING") as logs:
+            renderer.load_calibration(path)
+        self.assertFalse(renderer.lut_active)
+        self.assertTrue(any("no usable rows" in line for line in logs.output))
 
 
 class ArgumentParsingTests(unittest.TestCase):

@@ -1,15 +1,21 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "neurooptic-ui-evidence",
+    "task_id": "reforge:run-1",
     "last_phase": "phase 4",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1793293363.988979,
+    "updated_at": 1793293522.2939966,
     "owner": "opencode:reforge-followup",
-    "started_by": "opencode:reforge-followup",
-    "continuations": [],
-    "completed_at": 1793293364.758465
+    "started_by": "opencode",
+    "continuations": [
+      {
+        "agent": "opencode:reforge-followup",
+        "from": "opencode",
+        "at": 1793293522.2939966
+      }
+    ],
+    "completed_at": 1793293522.8922765
   },
   "checkpoints": [
     {
@@ -100,47 +106,6 @@
       "status": "suspended",
       "timestamp": 1793292143.1803405,
       "timestamp_str": "2026-10-29 19:42:23",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge run",
-      "phase_num": 3,
-      "description": "run started (start=24, step=4, stop=32)",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793292143.6338677,
-      "timestamp_str": "2026-10-29 19:42:23",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: window 24, 24 commit(s), 16 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, 5 binary not analysed",
-      "files_affected": [
-        "assets/artwork.jpg",
-        "assets/logo.jpg",
-        "assets/logo.png",
-        "assets/social-preview.jpg",
-        "assets/social-preview.png"
-      ],
-      "status": "in_progress",
-      "timestamp": 1793292164.3549728,
-      "timestamp_str": "2026-10-29 19:42:44",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: window 28, 4 commit(s), 4 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, 1 binary not analysed",
-      "files_affected": [
-        "banner.jpg"
-      ],
-      "status": "in_progress",
-      "timestamp": 1793292223.739755,
-      "timestamp_str": "2026-10-29 19:43:43",
       "agent": "opencode"
     },
     {
@@ -266,6 +231,39 @@
       "status": "completed",
       "timestamp": 1793293364.7584677,
       "timestamp_str": "2026-10-29 20:02:44",
+      "agent": "opencode:reforge-followup"
+    },
+    {
+      "task_id": "reforge:run-1",
+      "phase": "resumed",
+      "phase_num": 3,
+      "description": "Resumed 'reforge:run-1' after a pause",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793293515.9566147,
+      "timestamp_str": "2026-10-29 20:05:15",
+      "agent": "opencode"
+    },
+    {
+      "task_id": "reforge:run-1",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "Superseded by run-2: the only pending rule finding (bare except at line 368) was fixed by 9a10746 and is absent from HEAD; no code action needed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793293522.2939966,
+      "timestamp_str": "2026-10-29 20:05:22",
+      "agent": "opencode:reforge-followup",
+      "continued_from": "opencode"
+    },
+    {
+      "task_id": "reforge:run-1",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'reforge:run-1' completed successfully.",
+      "status": "completed",
+      "timestamp": 1793293522.8922787,
+      "timestamp_str": "2026-10-29 20:05:22",
       "agent": "opencode:reforge-followup"
     }
   ]

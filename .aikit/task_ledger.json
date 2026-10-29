@@ -2,45 +2,16 @@
   "version": 1,
   "active_task": {
     "task_id": "neurooptic-ui-evidence",
-    "last_phase": "phase 2",
-    "active_phase": 2,
-    "status": "in_progress",
-    "updated_at": 1793293271.101055,
+    "last_phase": "phase 4",
+    "active_phase": 5,
+    "status": "completed",
+    "updated_at": 1793293363.988979,
     "owner": "opencode:reforge-followup",
     "started_by": "opencode:reforge-followup",
     "continuations": [],
-    "impact_assessment": {
-      "why": "The UI contract now targets launcher.py, but strict delivery evidence is still off, so a UI change could ship without a finished, reviewed UI task.",
-      "benefits": "Delivery will require a UI task whose surface digest matches launcher.py, closing the last warning and making UI drift visible.",
-      "risks": "contract: ui_required becomes true; dependency: none; concurrency: none; state: .aikit/project.json, .aikit/ui_task.json and .aikit/ui_history.json",
-      "mitigation": "Begin from a clean baseline, run the fast unittest proof, record a real human review of the launcher, then rerun check --strict before pushing."
-    }
+    "completed_at": 1793293364.758465
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: window 3, 3 commit(s), 2 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793291685.6837811,
-      "timestamp_str": "2026-10-29 19:34:45",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: window 6, 3 commit(s), 2 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, 1 binary not analysed",
-      "files_affected": [
-        "assets/social-preview.jpg"
-      ],
-      "status": "in_progress",
-      "timestamp": 1793291718.8854847,
-      "timestamp_str": "2026-10-29 19:35:18",
-      "agent": "opencode"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 3",
@@ -275,6 +246,27 @@
         "risks": "contract: ui_required becomes true; dependency: none; concurrency: none; state: .aikit/project.json, .aikit/ui_task.json and .aikit/ui_history.json",
         "mitigation": "Begin from a clean baseline, run the fast unittest proof, record a real human review of the launcher, then rerun check --strict before pushing."
       }
+    },
+    {
+      "task_id": "neurooptic-ui-evidence",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/2] Phase 4: checklists: passed; 4/4 gates; UI task reviewed by human:user",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793293363.988979,
+      "timestamp_str": "2026-10-29 20:02:43",
+      "agent": "opencode:reforge-followup"
+    },
+    {
+      "task_id": "neurooptic-ui-evidence",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'neurooptic-ui-evidence' completed successfully.",
+      "status": "completed",
+      "timestamp": 1793293364.7584677,
+      "timestamp_str": "2026-10-29 20:02:44",
+      "agent": "opencode:reforge-followup"
     }
   ]
 }

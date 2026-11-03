@@ -1,67 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "reforge:run-1",
+    "task_id": "neurooptic-wave-audit-0-20",
     "last_phase": "phase 4",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1793293522.2939966,
-    "owner": "opencode:reforge-followup",
-    "started_by": "opencode",
-    "continuations": [
-      {
-        "agent": "opencode:reforge-followup",
-        "from": "opencode",
-        "at": 1793293522.2939966
-      }
-    ],
-    "completed_at": 1793293522.8922765
+    "updated_at": 1793722833.5389056,
+    "owner": "kilo:audit",
+    "started_by": "kilo:audit",
+    "continuations": [],
+    "completed_at": 1793722860.3156705
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 3",
-      "phase_num": 3,
-      "description": "Reforge stage 3: window 9, 3 commit(s), 2 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, 4 binary not analysed",
-      "files_affected": [
-        "assets/logo.jpg",
-        "assets/logo.png",
-        "assets/social-preview.jpg",
-        "assets/social-preview.png"
-      ],
-      "status": "in_progress",
-      "timestamp": 1793291761.2129526,
-      "timestamp_str": "2026-10-29 19:36:01",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 4",
-      "phase_num": 3,
-      "description": "Reforge stage 4: window 12, 3 commit(s), 4 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, 3 binary not analysed",
-      "files_affected": [
-        "assets/artwork.jpg",
-        "assets/logo.png",
-        "assets/social-preview.png"
-      ],
-      "status": "in_progress",
-      "timestamp": 1793291776.2380307,
-      "timestamp_str": "2026-10-29 19:36:16",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 5",
-      "phase_num": 3,
-      "description": "Reforge stage 5: window 15, 3 commit(s), 7 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, 1 binary not analysed",
-      "files_affected": [
-        "assets/social-preview.png"
-      ],
-      "status": "in_progress",
-      "timestamp": 1793291792.463843,
-      "timestamp_str": "2026-10-29 19:36:32",
-      "agent": "opencode"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 6",
@@ -265,6 +215,45 @@
       "timestamp": 1793293522.8922787,
       "timestamp_str": "2026-10-29 20:05:22",
       "agent": "opencode:reforge-followup"
+    },
+    {
+      "task_id": "neurooptic-wave-audit-0-20",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/2] Audit waves 0,10,20 (commits 0-29): survey code evolution, verify claims by reproduction, analyze findings",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793722760.408965,
+      "timestamp_str": "2026-11-03 19:19:20",
+      "agent": "kilo:audit",
+      "impact_assessment": {
+        "why": "Wave 0 built engine/launcher with STATIC sham zeroing left freq while validate_frequency rejects 0, so --sham static can never initialize; right hemifield also left flickering in SPLIT+STATIC",
+        "benefits": "Static control condition becomes usable; split-mode sham consistent; existing Nyquist and positivity guards unchanged for all non-static paths",
+        "risks": "contract: validate_frequency gains opt-in allow_zero plus STATIC zeroes both hemifields; dependency: none; concurrency: none; state: engine init and hardware validation only",
+        "mitigation": "Failing-first unit proof for allow_zero and STATIC both-zero, keep default rejection test green, run full unittest plus 4/4 aikit gates, inspect staged diff before commit"
+      },
+      "plan_digest": "f4b01f0694ce681e660195aaff06b06aeb4a391102dcaf3154b1e9114ecd6ed1"
+    },
+    {
+      "task_id": "neurooptic-wave-audit-0-20",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/2] Phase 4: checklists: passed; 4/4 project gates, 21 tests",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793722833.5389056,
+      "timestamp_str": "2026-11-03 19:20:33",
+      "agent": "kilo:audit"
+    },
+    {
+      "task_id": "neurooptic-wave-audit-0-20",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'neurooptic-wave-audit-0-20' completed successfully.",
+      "status": "completed",
+      "timestamp": 1793722860.315672,
+      "timestamp_str": "2026-11-03 19:21:00",
+      "agent": "kilo:audit"
     }
   ]
 }

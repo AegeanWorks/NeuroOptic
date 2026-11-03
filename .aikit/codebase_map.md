@@ -9,8 +9,8 @@
 - **Total Python Modules**: `3`
 - **Total Classes**: `15`
 - **Total Top-Level Functions**: `1`
-- **Total Class Methods**: `50`
-- **Total Source Lines**: `1425`
+- **Total Class Methods**: `52`
+- **Total Source Lines**: `1453`
 
 ---
 
@@ -19,7 +19,7 @@
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
 
-**Size**: `1076` lines (`43032` bytes)
+**Size**: `1086` lines (`43782` bytes)
 
 **Classes:**
 - `class WaveformType`
@@ -28,7 +28,7 @@
 - `class FrequencyBand`
 - `class FrequencyManager` - *Manages frequency bands and validates targets against hardware limits.*
   - Method `.get_band_name(frequency)`
-  - Method `.validate_frequency(target_freq, refresh_rate, waveform)` - *Calculates safe frequency ceiling (Nyquist limit) and validates.*
+  - Method `.validate_frequency(target_freq, refresh_rate, waveform, allow_zero)` - *Calculates safe frequency ceiling (Nyquist limit) and validates.*
 - `class PhaseOscillator` - *True Frame-Locked Phase Accumulator.*
   - Method `.__init__(frequency, waveform, phase_offset, rng)`
   - Method `.set_phase_jitter(amount)`
@@ -75,7 +75,7 @@
 ### [`test_entrainment_engine.py`](test_entrainment_engine.py)
 > *Regression shield for NeuroOptic's pure engine logic; no window or GL context is needed.*
 
-**Size**: `163` lines (`7414` bytes)
+**Size**: `181` lines (`8456` bytes)
 
 **Classes:**
 - `class FrequencyManagerTests`
@@ -85,6 +85,7 @@
   - Method `.test_non_positive_frequency_is_rejected()`
   - Method `.test_square_with_non_integer_frames_switches_to_sine()`
   - Method `.test_square_with_integer_frames_is_kept()`
+  - Method `.test_zero_allowed_only_with_explicit_static_opt_in()`
 - `class PhaseOscillatorTests`
   - Method `.test_step_accumulates_phase_per_frame()`
   - Method `.test_phase_wraps_within_one_cycle()`
@@ -98,6 +99,7 @@
   - Method `.test_am_signal_multiplies_carrier_and_modulator()`
 - `class ShamControlTests`
   - Method `.test_static_sham_zeroes_frequency()`
+  - Method `.test_static_sham_zeroes_both_hemifields()`
   - Method `.test_detune_sham_shifts_frequency_deterministically()`
 - `class CalibrationLoaderTests`
   - Method `._renderer_without_gl()`

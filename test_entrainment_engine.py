@@ -37,6 +37,15 @@ class FrequencyManagerTests(unittest.TestCase):
         freq, waveform = engine.FrequencyManager.validate_frequency(10.0, 60, engine.WaveformType.SQUARE)
         self.assertEqual((freq, waveform), (10.0, engine.WaveformType.SQUARE))
 
+    def test_zero_allowed_only_with_explicit_static_opt_in(self):
+        with self.assertRaises(ValueError):
+            engine.FrequencyManager.validate_frequency(0.0, 60, engine.WaveformType.SINE)
+        self.assertEqual(
+            engine.FrequencyManager.validate_frequency(0.0, 60, engine.WaveformType.SINE, allow_zero=True),
+            (0.0, engine.WaveformType.SINE))
+        with self.assertRaises(ValueError):
+            engine.FrequencyManager.validate_frequency(-1.0, 60, engine.WaveformType.SINE, allow_zero=True)
+
 
 class PhaseOscillatorTests(unittest.TestCase):
     def test_step_accumulates_phase_per_frame(self):
@@ -96,6 +105,15 @@ class ShamControlTests(unittest.TestCase):
         subject = engine.EntrainmentEngine(target_freq=40.0, waveform=engine.WaveformType.SINE,
                                            sham_type=engine.ShamType.STATIC)
         self.assertEqual(subject.target_freq, 0.0)
+
+    def test_static_sham_zeroes_both_hemifields(self):
+        subject = engine.EntrainmentEngine(target_freq=40.0, waveform=engine.WaveformType.SINE,
+                                           sham_type=engine.ShamType.STATIC, sham_seed=1)
+        self.assertEqual(subject.target_freq, 0.0)
+        self.assertEqual(subject.right_freq, 0.0)
+        self.assertEqual(
+            engine.FrequencyManager.validate_frequency(
+                subject.target_freq, 60, subject.waveform, allow_zero=True)[0], 0.0)
 
     def test_detune_sham_shifts_frequency_deterministically(self):
         subject = engine.EntrainmentEngine(target_freq=40.0, waveform=engine.WaveformType.SINE,

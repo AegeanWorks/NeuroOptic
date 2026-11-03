@@ -19,6 +19,13 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 - **Decision**: Register `2026-11-03-launcher.png` (`python launcher.py`, PrintWindow on `NeuroOptic Controller`, 516x939, commit `36f9038`) in `.aikit/media.json` and the README `aegean:screenshots` block. The controller is the whole pre-stimulation UI, so one keeper is full coverage.
 - **Consequences**: README proves the current controller. Reproduce with the launch plus PrintWindow helper above.
 
+### ADR-002: STATIC sham holds 0 Hz via explicit opt-in; both hemifields zeroed
+- **Date**: 2026-11-03
+- **Status**: Accepted
+- **Context**: Since wave 0 (`bf0f1ff`) STATIC set only `target_freq = 0.0` while `validate_frequency` rejects `<= 0`, so `initialize_hardware` raised `ValueError` and exited instead of showing static light; `right_freq` kept flickering in SPLIT mode. Reproduced: `validate_frequency(0.0, 60, SINE)` raises `ValueError: Frequency must be positive`.
+- **Decision**: `validate_frequency(..., allow_zero=False)` returns `(0.0, waveform)` early only when `allow_zero` is true; `EntrainmentEngine` sets both `target_freq` and `right_freq` to `0.0` for STATIC and passes `allow_zero=(sham == STATIC)` through both hardware-validation calls; band label logs `Static` for the hold.
+- **Consequences**: `--sham static` initializes; default Nyquist/positivity guards unchanged (existing `0.0 rejected` test still green); 2 new tests cover the opt-in and both-zero hold.
+
 ## Licensing migration (agpl-final)
 
 - New versions use the Aegean License 1.1 (AL-1.1); versions up to and including `agpl-final` remain under GNU AGPL-3.0.

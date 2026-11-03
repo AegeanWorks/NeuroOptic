@@ -90,11 +90,16 @@ class FrequencyManager:
         return "Custom"
 
     @staticmethod
-    def validate_frequency(target_freq: float, refresh_rate: int, waveform: WaveformType) -> Tuple[float, WaveformType]:
+    def validate_frequency(target_freq: float, refresh_rate: int, waveform: WaveformType,
+                           allow_zero: bool = False) -> Tuple[float, WaveformType]:
         """
         Calculates safe frequency ceiling (Nyquist limit) and validates.
         Returns the (target_freq, waveform) tuple. Switches waveform if compatibility rules require it.
+        When allow_zero is True, an exact 0.0 Hz static hold bypasses the
+        positivity gate (STATIC sham); every other value validates unchanged.
         """
+        if target_freq == 0 and allow_zero:
+            return target_freq, waveform
         # Nyquist limit: We need at least 2 frames to represent a full cycle (On/Off or Peak/Trough)
         safe_ceiling = refresh_rate / 2.0
 
@@ -477,6 +482,7 @@ class EntrainmentEngine:
 
             elif self.sham_type == ShamType.STATIC:
                 self.target_freq = 0.0
+                self.right_freq = 0.0
                 logger.info("Sham: Frequency set to 0 Hz (Static)")
 
         self.window = None
@@ -511,14 +517,18 @@ class EntrainmentEngine:
 
         # Validate Frequencies against Hardware
         try:
+            # STATIC sham holds 0 Hz on both hemifields; every other path validates unchanged.
+            allow_zero = (self.sham_type == ShamType.STATIC)
             # Validate Left (Main)
             self.target_freq, self.waveform_left = FrequencyManager.validate_frequency(self.target_freq,
                                                                                   self.monitor_refresh_rate,
-                                                                                  self.waveform)
+                                                                                  self.waveform,
+                                                                                  allow_zero=allow_zero)
             # Validate Right
             self.right_freq, self.waveform_right = FrequencyManager.validate_frequency(self.right_freq,
                                                                                   self.monitor_refresh_rate,
-                                                                                  self.waveform)
+                                                                                  self.waveform,
+                                                                                  allow_zero=allow_zero)
 
             # Create Oscillator AFTER validation to ensure settings (like jitter) aren't overwritten
             self.oscillator_left = PhaseOscillator(self.target_freq, self.waveform_left, phase_offset=self.phase_offset_rad, rng=self.rng)
@@ -529,7 +539,7 @@ class EntrainmentEngine:
                 self.oscillator_left.set_phase_jitter(self.phase_jitter_amount)
                 self.oscillator_right.set_phase_jitter(self.phase_jitter_amount)
 
-            band = FrequencyManager.get_band_name(self.target_freq)
+            band = "Static" if (allow_zero and self.target_freq == 0) else FrequencyManager.get_band_name(self.target_freq)
             logger.info(f"Target Frequency: {self.target_freq} Hz ({band}) - SAFE")
         except ValueError as e:
             logger.critical(str(e))

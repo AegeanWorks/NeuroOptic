@@ -117,3 +117,11 @@ python entrainment_engine.py --duration 600 --ramp 5.0
 ## 📜 License
 
 Free for personal use under the Aegean License 1.1 (AL-1.1); see [LICENSE](LICENSE). Any commercial use needs the Aegean Commercial License 1.0 (ACL-1.0); see [COMMERCIAL.md](COMMERCIAL.md).
+
+<!-- aegean:screenshots:start -->
+## Screenshots
+
+<a href="https://github.com/AegeanWorks/NeuroOptic/commit/36f9038"><img src="assets/screenshots/2026-11-03-launcher.png" alt="NeuroOptic controller at 2026-11-03"></a>
+
+*commit `36f9038` · 2026-11-03 · window 516x939 · controller via PrintWindow; engine window stays unpressed (ADR-001)*
+<!-- aegean:screenshots:end -->

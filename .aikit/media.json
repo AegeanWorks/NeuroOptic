@@ -41,6 +41,26 @@
       }
     }
   },
-  "screenshots": [],
+  "screenshots": [
+    {
+      "path": "assets/screenshots/2026-11-03-launcher.png",
+      "alt": "NeuroOptic controller at 2026-11-03",
+      "caption": "Controller from python launcher.py: frequency, stimulation, session, sham and display sections with START. Engine window opens only on START and stays unpressed.",
+      "commit": "36f9038404166e22966ea376a9d2ae204dd7b5e5",
+      "taken_at": "2026-11-03",
+      "viewport": "516x939",
+      "width": 516,
+      "height": 939,
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:kilo",
+        "method": "vision",
+        "notes": "Real PrintWindow capture of the live controller: all five sections, 40 Hz Sine defaults and START all legible.",
+        "score": 92,
+        "reviewed_at": "2026-11-03"
+      }
+    }
+  ],
   "model": "community/scriptsnsenses-sys/flux-2-dev-free"
 }

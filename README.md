@@ -64,7 +64,7 @@ NeuroOptic is a research-grade visual oscillator designed for precise brainwave 
     *   **Detune**: Frequency drifts slightly to prevent entrainment.
     *   **Low Amp**: Sub-threshold intensity.
     *   **Jitter**: Randomized phase timing.
-    *   **Static**: Non-flickering control.
+    *   **Static**: Non-flickering control (0.5 hold, SINE phase 0).
 *   **Tech Stack**: Python, GLFW, OpenGL (VSync enabled).
 
 ### Installation

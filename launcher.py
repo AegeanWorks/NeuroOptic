@@ -79,7 +79,7 @@ class NeuroOpticLauncher:
         self.sham_combo = ctk.CTkComboBox(sham_frame, variable=self.sham_var, state="readonly",
                                           values=['None', 'Detune', 'Low_Amp', 'Jitter', 'Static'])
         self.sham_combo.grid(row=1, column=1, sticky="e", padx=10)
-        self.create_help_btn(sham_frame, "Research control conditions (Placebo).\n\nNone: Active stimulation (Normal).\nDetune: Frequency drifts slightly to prevent entrainment.\nLow_amp: Very weak intensity.\nJitter: Random timing irregularities.\nStatic: Constant light without flickering.").grid(row=1, column=2, padx=5)
+        self.create_help_btn(sham_frame, "Research control conditions (Placebo).\n\nNone: Active stimulation (Normal).\nDetune: Frequency drifts slightly to prevent entrainment.\nLow_amp: Very weak intensity.\nJitter: Random timing irregularities.\nStatic: Constant 0.5 hold without flickering (SINE, phase 0).").grid(row=1, column=2, padx=5)
 
         # --- Display & Phase ---
         display_frame = self.create_group_frame(main_frame, "Display & Phase")
@@ -141,6 +141,20 @@ class NeuroOpticLauncher:
         elif "Gamma" in selection:
             self.freq_var.set(40.0)
 
+    def _parse_float(self, raw, label, min_value=None, max_value=None):
+        try:
+            value = float(str(raw).strip())
+        except (TypeError, ValueError):
+            messagebox.showerror("Invalid input", f"{label} must be a number (got {raw!r}).")
+            return None
+        if min_value is not None and value < min_value:
+            messagebox.showerror("Invalid input", f"{label} must be >= {min_value} (got {value}).")
+            return None
+        if max_value is not None and value > max_value:
+            messagebox.showerror("Invalid input", f"{label} must be <= {max_value} (got {value}).")
+            return None
+        return value
+
     def launch_engine(self):
         # Construct arguments
         script_path = os.path.join(os.path.dirname(__file__), 'entrainment_engine.py')
@@ -149,26 +163,68 @@ class NeuroOpticLauncher:
             messagebox.showerror("Error", f"Could not find engine script at:\n{script_path}")
             return
 
+        sham = self.sham_var.get().lower()
+        if sham not in ('none', 'detune', 'low_amp', 'jitter', 'static'):
+            messagebox.showerror("Invalid input", f"Unknown sham condition: {self.sham_var.get()!r}.")
+            return
+        waveform = self.waveform_var.get().lower()
+        if waveform not in ('sine', 'square', 'am', 'triangle'):
+            messagebox.showerror("Invalid input", f"Unknown waveform: {self.waveform_var.get()!r}.")
+            return
+        mode = self.mode_var.get().lower()
+        if mode not in ('full', 'ring', 'left', 'right', 'split',
+                        'quad_tl', 'quad_tr', 'quad_bl', 'quad_br'):
+            messagebox.showerror("Invalid input", f"Unknown mode: {self.mode_var.get()!r}.")
+            return
+
+        freq = self._parse_float(self.freq_var.get(), "Target Frequency", min_value=0.0)
+        if freq is None:
+            return
+        if freq <= 0 and sham != 'static':
+            messagebox.showerror("Invalid input", "Target Frequency must be > 0 unless Sham is Static.")
+            return
+        duration = self._parse_float(self.duration_var.get(), "Duration", min_value=0.0)
+        if duration is None:
+            return
+        ramp = self._parse_float(self.ramp_var.get(), "Ramp Up", min_value=0.0)
+        if ramp is None:
+            return
+        gamma = self._parse_float(self.gamma_var.get(), "Gamma", min_value=0.1, max_value=4.0)
+        if gamma is None:
+            return
+        brightness = self._parse_float(self.brightness_var.get(), "Brightness", min_value=0.0, max_value=1.0)
+        if brightness is None:
+            return
+        phase = self._parse_float(self.phase_var.get(), "Phase", min_value=0.0, max_value=360.0)
+        if phase is None:
+            return
+        r_freq = self._parse_float(self.right_freq_var.get(), "R-Freq", min_value=0.0)
+        if r_freq is None:
+            return
+        r_phase = self._parse_float(self.right_phase_var.get(), "R-Phase", min_value=0.0, max_value=360.0)
+        if r_phase is None:
+            return
+        if mode != 'split' and r_freq not in (0.0, freq):
+            messagebox.showwarning(
+                "Right frequency ignored",
+                f"R-Freq ({r_freq} Hz) only takes effect in Split mode; the display will use {freq} Hz.")
+
         cmd = [
             sys.executable,
             script_path,
-            '--freq', str(self.freq_var.get()),
-            '--waveform', self.waveform_var.get().lower(),
-            '--mode', self.mode_var.get().lower(),
-            '--duration', str(self.duration_var.get()),
-            '--ramp', str(self.ramp_var.get()),
-            '--sham', self.sham_var.get().lower(),
-            '--gamma', str(self.gamma_var.get()),
-            '--brightness', str(self.brightness_var.get()),
-            '--phase', str(self.phase_var.get()),
-            '--phase-right', str(self.right_phase_var.get())
+            '--freq', str(freq),
+            '--waveform', waveform,
+            '--mode', mode,
+            '--duration', str(duration),
+            '--ramp', str(ramp),
+            '--sham', sham,
+            '--gamma', str(gamma),
+            '--brightness', str(brightness),
+            '--phase', str(phase),
+            '--phase-right', str(r_phase)
         ]
 
         # Only pass right freq if it's set (non-zero), otherwise engine defaults to main freq
-        try:
-            r_freq = float(self.right_freq_var.get())
-        except ValueError:
-            r_freq = 0.0
         if r_freq > 0:
             cmd.extend(['--freq-right', str(r_freq)])
 

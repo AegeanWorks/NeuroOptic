@@ -97,9 +97,10 @@ class FrequencyManager:
         Returns the (target_freq, waveform) tuple. Switches waveform if compatibility rules require it.
         When allow_zero is True, an exact 0.0 Hz static hold bypasses the
         positivity gate (STATIC sham); every other value validates unchanged.
+        Normalizes -0.0 to 0.0 so logs never show negative zero.
         """
         if target_freq == 0 and allow_zero:
-            return target_freq, waveform
+            return 0.0, waveform
         # Nyquist limit: We need at least 2 frames to represent a full cycle (On/Off or Peak/Trough)
         safe_ceiling = refresh_rate / 2.0
 
@@ -341,12 +342,26 @@ class StimulusRenderer:
             data = []
             with open(filepath, 'r', encoding='utf-8') as f:
                 reader = csv.reader(f)
-                # Row 1 is the header; a malformed later row is reported, not silently dropped.
+                # First row is usually the header; only skip it silently when both
+                # columns are non-numeric (e.g. Input,Output). A half-numeric
+                # first row like 0.0,bad is malformed data and must warn.
                 for line_number, row in enumerate(reader, 1):
                     try:
                         data.append(float(row[1]))  # Assuming Col 0=Input, Col 1=Output
                     except (ValueError, IndexError):
-                        if line_number > 1:
+                        def _is_number(text):
+                            try:
+                                float(text)
+                                return True
+                            except (TypeError, ValueError):
+                                return False
+                        is_header = (
+                            line_number == 1
+                            and len(row) >= 2
+                            and not _is_number(row[0])
+                            and not _is_number(row[1])
+                        )
+                        if not is_header:
                             logger.warning(
                                 f"Skipping malformed calibration row {line_number} in {filepath}: {row!r}")
             
@@ -483,7 +498,15 @@ class EntrainmentEngine:
             elif self.sham_type == ShamType.STATIC:
                 self.target_freq = 0.0
                 self.right_freq = 0.0
-                logger.info("Sham: Frequency set to 0 Hz (Static)")
+                # STATIC must be truly non-flickering at mean luminance (0.5 x brightness).
+                # SINE at phase 0 holds 0.5; SQUARE/TRIANGLE hold phase-dependent
+                # extremes and AM still advances its carrier, so normalize.
+                self.waveform = WaveformType.SINE
+                self.waveform_left = WaveformType.SINE
+                self.waveform_right = WaveformType.SINE
+                self.phase_offset_rad = 0.0
+                self.right_phase_rad = 0.0
+                logger.info("Sham: Frequency set to 0 Hz (Static, SINE hold at 0.5)")
 
         self.window = None
         self.monitor_refresh_rate = 60  # Default fallback
@@ -522,13 +545,17 @@ class EntrainmentEngine:
             # Validate Left (Main)
             self.target_freq, self.waveform_left = FrequencyManager.validate_frequency(self.target_freq,
                                                                                   self.monitor_refresh_rate,
-                                                                                  self.waveform,
+                                                                                  self.waveform_left,
                                                                                   allow_zero=allow_zero)
             # Validate Right
             self.right_freq, self.waveform_right = FrequencyManager.validate_frequency(self.right_freq,
                                                                                   self.monitor_refresh_rate,
-                                                                                  self.waveform,
+                                                                                  self.waveform_right,
                                                                                   allow_zero=allow_zero)
+            if self.mode != StimulationMode.SPLIT_HEMIFIELD and self.right_freq != self.target_freq:
+                logger.warning(
+                    f"Right frequency ({self.right_freq} Hz) is ignored unless mode is SPLIT; "
+                    f"using left ({self.target_freq} Hz) for the full display.")
 
             # Create Oscillator AFTER validation to ensure settings (like jitter) aren't overwritten
             self.oscillator_left = PhaseOscillator(self.target_freq, self.waveform_left, phase_offset=self.phase_offset_rad, rng=self.rng)
@@ -547,7 +574,8 @@ class EntrainmentEngine:
             sys.exit(1)
 
         # If AM Carrier, set carrier to max safe frequency (Nyquist)
-        if self.waveform == WaveformType.AM_CARRIER:
+        # STATIC is normalized to SINE above, so no carrier flicker in sham hold.
+        if self.waveform_left == WaveformType.AM_CARRIER or self.waveform_right == WaveformType.AM_CARRIER:
             carrier = self.monitor_refresh_rate / 2.0
             self.oscillator_left.set_carrier_frequency(carrier)
             self.oscillator_right.set_carrier_frequency(carrier)
@@ -807,7 +835,15 @@ class EntrainmentEngine:
         logger.info(f"Frequency Analysis:")
         logger.info(f"  - Target: {self.target_freq:.4f} Hz")
         logger.info(f"  - Delivered (Statistical): {effective_delivered_freq:.4f} Hz")
-        logger.info(f"  - Drift: {drift:.4f} Hz ({'EXCELLENT' if drift < 0.01 else 'ACCEPTABLE'})")
+        if drift < 0.01:
+            drift_grade = "EXCELLENT"
+        elif drift < 0.10:
+            drift_grade = "GOOD"
+        elif drift < 0.50:
+            drift_grade = "ACCEPTABLE"
+        else:
+            drift_grade = "POOR - check frame drops/refresh rate"
+        logger.info(f"  - Drift: {drift:.4f} Hz ({drift_grade})")
         logger.info(f"  - Measured (Signal Zero-Crossing): {measured_freq:.3f} Hz")
         logger.info(f"Phase Consistency: Frame-Locked (No cumulative phase error from OS jitter)")
 

@@ -123,6 +123,25 @@ class ShamControlTests(unittest.TestCase):
         self.assertNotEqual(subject.target_freq, 40.0)
         self.assertEqual(subject.target_freq, twin.target_freq)
 
+    def test_static_sham_normalizes_to_sine_hold(self):
+        subject = engine.EntrainmentEngine(target_freq=40.0, waveform=engine.WaveformType.AM_CARRIER,
+                                           sham_type=engine.ShamType.STATIC, sham_seed=1,
+                                           phase_offset=90.0, right_phase_offset=180.0)
+        self.assertEqual(subject.waveform, engine.WaveformType.SINE)
+        self.assertEqual(subject.waveform_left, engine.WaveformType.SINE)
+        self.assertEqual(subject.waveform_right, engine.WaveformType.SINE)
+        self.assertEqual(subject.phase_offset_rad, 0.0)
+        self.assertEqual(subject.right_phase_rad, 0.0)
+        # Mean-luminance hold: SINE at phase 0 is 0.5
+        self.assertAlmostEqual(
+            subject.compute_cpu_signal(engine.WaveformType.SINE, 0.0, 0.0), 0.5)
+
+    def test_allow_zero_normalizes_negative_zero(self):
+        freq, _ = engine.FrequencyManager.validate_frequency(
+            -0.0, 60, engine.WaveformType.SINE, allow_zero=True)
+        self.assertEqual(freq, 0.0)
+        self.assertFalse(str(freq).startswith("-"))
+
 
 class CalibrationLoaderTests(unittest.TestCase):
     def _renderer_without_gl(self):
@@ -161,6 +180,14 @@ class CalibrationLoaderTests(unittest.TestCase):
             renderer.load_calibration(path)
         self.assertFalse(renderer.lut_active)
         self.assertTrue(any("no usable rows" in line for line in logs.output))
+
+    def test_malformed_first_data_row_without_header_warns(self):
+        renderer = self._renderer_without_gl()
+        path = self._write("0.0,bad\n1.0,0.9\n")
+        with self.assertLogs(engine.logger, level="WARNING") as logs:
+            renderer.load_calibration(path)
+        self.assertTrue(renderer.lut_active)
+        self.assertTrue(any("Skipping malformed calibration row 1" in line for line in logs.output))
 
 
 class ArgumentParsingTests(unittest.TestCase):

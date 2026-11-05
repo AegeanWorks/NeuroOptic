@@ -26,6 +26,13 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 - **Decision**: `validate_frequency(..., allow_zero=False)` returns `(0.0, waveform)` early only when `allow_zero` is true; `EntrainmentEngine` sets both `target_freq` and `right_freq` to `0.0` for STATIC and passes `allow_zero=(sham == STATIC)` through both hardware-validation calls; band label logs `Static` for the hold.
 - **Consequences**: `--sham static` initializes; default Nyquist/positivity guards unchanged (existing `0.0 rejected` test still green); 2 new tests cover the opt-in and both-zero hold.
 
+### ADR-003: STATIC normalizes to SINE 0.5 hold; launcher validates, calibration header explicit
+- **Date**: 2026-11-06
+- **Status**: Accepted
+- **Context**: ADR-002 fixed STATIC init but preserved the requested waveform, so SQUARE/TRIANGLE held phase-dependent extremes and AM still advanced its carrier (30 Hz flicker on a sham that must not flicker); `-0.0` logged as `-0.0 Hz`; R-Freq was silently ignored outside SPLIT; launcher passed raw strings to the CLI with no range checks; calibration silently dropped a header-looking first row even when it was malformed data.
+- **Decision**: STATIC forces SINE with zero phase offsets (reproducible 0.5 x brightness hold, no AM carrier); `validate_frequency` normalizes `-0.0` to `0.0`; `initialize_hardware` warns when R-Freq differs outside SPLIT and gates the AM carrier on either hemifield; launcher validates freq/duration/ramp/gamma/brightness/phase ranges before `Popen` and warns when R-Freq is ignored; calibration only skips row 1 silently when both columns are non-numeric.
+- **Consequences**: Sham control is truly static and reproducible; invalid GUI input fails fast with a dialog instead of a dead subprocess; calibration errors stay visible; drift log uses EXCELLENT/GOOD/ACCEPTABLE/POOR tiers. 3 new tests (SINE hold, -0.0, first-row warn) bring the shield to 24 green.
+
 ## Licensing migration (agpl-final)
 
 - New versions use the Aegean License 1.1 (AL-1.1); versions up to and including `agpl-final` remain under GNU AGPL-3.0.

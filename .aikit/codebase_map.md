@@ -6,19 +6,74 @@
 ---
 
 ## 📊 Codebase Metrics
-- **Total Python Modules**: `3`
-- **Total Classes**: `15`
-- **Total Top-Level Functions**: `1`
-- **Total Class Methods**: `56`
-- **Total Source Lines**: `1572`
+- **Total Python Modules**: `8`
+- **Total Classes**: `27`
+- **Total Top-Level Functions**: `3`
+- **Total Class Methods**: `79`
+- **Total Source Lines**: `2119`
 
 ## 🧭 Map Coverage
-- **Indexed**: python (`3` module(s))
+- **Indexed**: python (`8` module(s))
 - **Not indexed by this map**: none (no non-Python source files were found)
 
 ---
 
 ## 📦 Modules & Exported Symbols
+
+### [`core/__init__.py`](core/__init__.py)
+> *NeuroOptic Core: Headless mechanics, protocol schemas, and safety validation.*
+
+**Size**: `35` lines (`718` bytes)
+
+---
+
+### [`core/protocol.py`](core/protocol.py)
+> *Declarative protocol specification and parameter models for NeuroOptic entrainment.*
+
+**Size**: `157` lines (`5367` bytes)
+
+**Classes:**
+- `class WaveformType`
+- `class ShamType`
+- `class StimulationMode`
+- `class FrequencyBand`
+- `class EntrainmentProtocol` - *Immutable, validated protocol definition for visual entrainment sessions.*
+  - Method `.to_dict()` - *Serialize protocol parameters to a JSON-compatible dictionary.*
+  - Method `.from_dict(data)` - *Reconstruct an EntrainmentProtocol from a dictionary with case-insensitive enums.*
+  - Method `.to_cli_args()` - *Convert protocol parameters into CLI argument tokens for entrainment_engine.py.*
+
+---
+
+### [`core/safety.py`](core/safety.py)
+> *Bio-safety calculations, photic risk scoring, and hardware Nyquist validation.*
+
+**Size**: `115` lines (`4085` bytes)
+
+**Classes:**
+- `class RiskTier`
+- `class PhoticRiskAssessment` - *Evaluation result of photic driving and seizure risk.*
+
+**Functions:**
+- `def calculate_photic_risk(freq, waveform, mode)` - *Evaluates photosensitive epilepsy (PSE) risk for given stimulation parameters.*
+- `def validate_hardware_limits(target_freq, refresh_rate, waveform, allow_zero)` - *Validates stimulation frequency against display Nyquist limit and duty-cycle symmetry.*
+
+---
+
+### [`core/session_controller.py`](core/session_controller.py)
+> *Headless session controller managing entrainment execution lifecycle and process supervision.*
+
+**Size**: `88` lines (`3397` bytes)
+
+**Classes:**
+- `class SessionState`
+- `class SessionController` - *Manages protocol validation, subprocess execution, and session lifecycle.*
+  - Method `.__init__(protocol, engine_path)`
+  - Method `.validate(refresh_rate)` - *Validates protocol against display refresh limits and calculates bio-safety risk.*
+  - Method `.build_command(python_exe)` - *Constructs subprocess command line tokens for the entrainment engine.*
+  - Method `.start_session(popen_fn)` - *Launches the entrainment engine subprocess under process tracking.*
+  - Method `.stop_session()` - *Terminates the running engine subprocess safely.*
+
+---
 
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
@@ -116,5 +171,32 @@
   - Method `.test_malformed_first_data_row_without_header_warns()`
 - `class ArgumentParsingTests`
   - Method `.test_defaults_match_documented_values()`
+
+---
+
+### [`test_mechanics.py`](test_mechanics.py)
+> *Unit test suite for NeuroOptic headless mechanics, protocol schemas, and safety validation.*
+
+**Size**: `152` lines (`5697` bytes)
+
+**Classes:**
+- `class ProtocolModelTests`
+  - Method `.test_presets_include_canonical_bands()`
+  - Method `.test_protocol_default_construction()`
+  - Method `.test_protocol_dict_roundtrip()`
+  - Method `.test_protocol_cli_args_generation()`
+- `class SafetyValidationTests`
+  - Method `.test_square_wave_in_photic_window_is_high_risk()`
+  - Method `.test_sine_wave_in_photic_window_is_caution()`
+  - Method `.test_gamma_frequency_is_safe()`
+  - Method `.test_static_hold_is_safe()`
+  - Method `.test_nyquist_exceeded_raises_error()`
+  - Method `.test_non_integer_square_degrades_to_sine()`
+  - Method `.test_allow_zero_static_pass()`
+- `class SessionControllerTests`
+  - Method `.test_controller_initial_state_idle()`
+  - Method `.test_controller_validation_updates_state()`
+  - Method `.test_controller_build_command()`
+  - Method `.test_controller_start_and_stop_mocked()`
 
 ---

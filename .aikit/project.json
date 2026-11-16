@@ -2,6 +2,15 @@
   "schema": 1,
   "name": "neurooptic",
   "test_command": null,
+  "mechanics": {
+    "core": [
+      "core/protocol.py",
+      "core/safety.py",
+      "core/session_controller.py"
+    ],
+    "test": "python -m unittest test_mechanics.py"
+  },
+  "mechanics_required": true,
   "gates": {},
   "created": "2026-10-21",
   "has_ui": true,

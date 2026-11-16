@@ -2,10 +2,10 @@
   "version": 1,
   "active_task": {
     "task_id": "neurooptic-subagent-ui-mechanics",
-    "last_phase": "phase 2",
-    "active_phase": 2,
+    "last_phase": "phase 4",
+    "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794844050.3193262,
+    "updated_at": 1794844235.2752943,
     "owner": "antigravity:subagent-ui",
     "started_by": "antigravity:subagent-ui",
     "continuations": [],
@@ -17,23 +17,6 @@
     ]
   },
   "checkpoints": [
-    {
-      "task_id": "neurooptic-ui-evidence",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/2] Enable strict UI evidence and finish a reviewed launcher UI task",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793293271.101055,
-      "timestamp_str": "2026-10-29 20:01:11",
-      "agent": "opencode:reforge-followup",
-      "impact_assessment": {
-        "why": "The UI contract now targets launcher.py, but strict delivery evidence is still off, so a UI change could ship without a finished, reviewed UI task.",
-        "benefits": "Delivery will require a UI task whose surface digest matches launcher.py, closing the last warning and making UI drift visible.",
-        "risks": "contract: ui_required becomes true; dependency: none; concurrency: none; state: .aikit/project.json, .aikit/ui_task.json and .aikit/ui_history.json",
-        "mitigation": "Begin from a clean baseline, run the fast unittest proof, record a real human review of the launcher, then rerun check --strict before pushing."
-      }
-    },
     {
       "task_id": "neurooptic-ui-evidence",
       "phase": "phase 4",
@@ -271,6 +254,24 @@
         "mitigation": "Preserve exact CLI arguments in entrainment_engine.py and GUI bindings in launcher.py while routing through pure core mechanics."
       },
       "plan_digest": "2345e53928a04c9991098b984966d83bfa4f285fbfcff55c69f8051d985cb041",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-subagent-ui-mechanics",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[milestone 1/5] Extract decoupled core mechanics and declare ADR-271 contract",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794844235.2752943,
+      "timestamp_str": "2026-11-16 18:50:35",
+      "agent": "antigravity:subagent-ui",
+      "checklists": "passed",
       "workspaces": [
         {
           "name": "NeuroOptic",

@@ -8,6 +8,8 @@
 NeuroOptic is a research-grade visual oscillator for brainwave entrainment: configurable 1-120 Hz
 frequencies, hardware-aware safety limits and drift-free phase accumulation.
 
+> **Archived**: Retired by owner request after final delivery: validation unification, sham-seed reproducibility and Nyquist fail-loudly preflight shipped; all commits pushed (archived 2026-11-16). This project is read-only; its GitHub repository is archived.
+
 ## ⚡ 30-Second Cold-Start Quick Reference
 
 - **Runtime Prerequisites**: Python 3.10+ with `glfw`, `PyOpenGL`, `numpy` and `customtkinter` (see `requirements.txt`).

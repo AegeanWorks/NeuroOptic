@@ -65,5 +65,11 @@
     "source-available",
     "aegean-license",
     "commercial-license"
-  ]
+  ],
+  "archived": true,
+  "archived_at": "2026-11-16",
+  "archive_reason": "Retired by owner request after final delivery: validation unification, sham-seed reproducibility and Nyquist fail-loudly preflight shipped; all commits pushed",
+  "archive_repo": "AegeanWorks/NeuroOptic",
+  "archive_description": "[ARCHIVED] NeuroOptic is a research-grade visual oscillator for brainwave entrainment: configurable 1-120 Hz frequencies, hardware-aware safety limits and drift-free phase accumulation.",
+  "archive_origin": "projects/NeuroOptic"
 }

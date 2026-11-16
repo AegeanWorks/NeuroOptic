@@ -3,7 +3,8 @@
   "surfaces": {
     "app": {
       "paths": [
-        "launcher.py"
+        "launcher.py",
+        "test_launcher.py"
       ]
     }
   },

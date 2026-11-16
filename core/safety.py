@@ -2,10 +2,12 @@
 
 from dataclasses import dataclass
 from enum import Enum, auto
-import math
+import logging
 from typing import Tuple
 
 from core.protocol import StimulationMode, WaveformType
+
+logger = logging.getLogger(__name__)
 
 
 class RiskTier(Enum):
@@ -87,29 +89,47 @@ def validate_hardware_limits(target_freq: float, refresh_rate: int,
                              waveform: WaveformType,
                              allow_zero: bool = False) -> Tuple[float, WaveformType]:
     """
-    Validates stimulation frequency against display Nyquist limit and duty-cycle symmetry.
+    Single source of truth for stimulation frequency validation (Nyquist limit and
+    duty-cycle symmetry). EntrainmentEngine.FrequencyManager.validate_frequency
+    delegates here; SessionController applies the returned waveform, which may
+    degrade SQUARE to SINE when the display cannot render a 50% duty cycle.
 
-    Raises ValueError if target frequency exceeds refresh_rate / 2.0 or is non-positive
-    when allow_zero is False.
+    Raises ValueError if target frequency exceeds refresh_rate / 2.0 or is
+    non-positive when allow_zero is False. Normalizes -0.0 to 0.0 with STATIC sham.
     """
     if target_freq == 0.0 and allow_zero:
         return 0.0, waveform
 
+    # Nyquist limit: We need at least 2 frames to represent a full cycle (On/Off or Peak/Trough)
     safe_ceiling = refresh_rate / 2.0
+
     if target_freq > safe_ceiling:
         raise ValueError(
             f"Target frequency {target_freq} Hz exceeds safe representable limit "
-            f"({safe_ceiling} Hz) for current monitor refresh rate ({refresh_rate} Hz)."
+            f"({safe_ceiling} Hz) for the current monitor refresh rate ({refresh_rate} Hz).\n"
+            f"Please lower the frequency or use a higher refresh rate monitor (e.g., 144Hz, 240Hz)."
         )
 
-    if target_freq <= 0.0:
+    if target_freq <= 0:
         raise ValueError("Frequency must be positive.")
 
-    # Duty-cycle distortion check for Square waves
+    # Duty-cycle distortion check for Square waves: we need integer frames per
+    # HALF cycle for a 50% duty cycle.
     if waveform == WaveformType.SQUARE:
         frames_per_half_cycle = refresh_rate / (2.0 * target_freq)
         if abs(frames_per_half_cycle - round(frames_per_half_cycle)) > 0.01:
-            # Degrade to SINE to maintain 50% duty cycle
+            logger.warning(
+                f"⚠ COMPATIBILITY WARNING: {target_freq} Hz cannot be precisely represented by a Square wave "
+                f"on this display ({refresh_rate} Hz).\n"
+                f"   Frames/Half-Cycle: {frames_per_half_cycle:.2f} (Non-Integer).\n"
+                f"   Result: Duty Cycle Distortion (Not 50%).\n"
+                f"   Action: Switching to SINE wave to maintain signal integrity."
+            )
             return target_freq, WaveformType.SINE
+
+        # Risk Warning for Photosensitive Range (10-30Hz)
+        if 10 <= target_freq <= 30:
+            logger.warning(
+                f"⚠ SAFETY WARNING: {target_freq} Hz Square Wave is in the high-risk photosensitive window (10-30 Hz).")
 
     return target_freq, waveform

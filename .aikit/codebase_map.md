@@ -10,7 +10,7 @@
 - **Total Classes**: `26`
 - **Total Top-Level Functions**: `8`
 - **Total Class Methods**: `112`
-- **Total Source Lines**: `2700`
+- **Total Source Lines**: `2685`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`11` module(s))
@@ -47,7 +47,7 @@
 ### [`core/safety.py`](core/safety.py)
 > *Bio-safety calculations, photic risk scoring, and hardware Nyquist validation.*
 
-**Size**: `115` lines (`4085` bytes)
+**Size**: `135` lines (`5300` bytes)
 
 **Classes:**
 - `class RiskTier`
@@ -55,7 +55,7 @@
 
 **Functions:**
 - `def calculate_photic_risk(freq, waveform, mode)` - *Evaluates photosensitive epilepsy (PSE) risk for given stimulation parameters.*
-- `def validate_hardware_limits(target_freq, refresh_rate, waveform, allow_zero)` - *Validates stimulation frequency against display Nyquist limit and duty-cycle symmetry.*
+- `def validate_hardware_limits(target_freq, refresh_rate, waveform, allow_zero)` - *Single source of truth for stimulation frequency validation (Nyquist limit and*
 
 ---
 
@@ -78,7 +78,7 @@
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
 
-**Size**: `1150` lines (`46804` bytes)
+**Size**: `1115` lines (`44969` bytes)
 
 **Classes:**
 - `class FrequencyBand`

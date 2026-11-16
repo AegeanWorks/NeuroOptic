@@ -29,6 +29,7 @@ from core.protocol import (
     StimulationMode,
     WaveformType,
 )
+from core.safety import validate_hardware_limits
 
 import glfw
 import numpy as np
@@ -75,48 +76,12 @@ class FrequencyManager:
                            allow_zero: bool = False) -> Tuple[float, WaveformType]:
         """
         Calculates safe frequency ceiling (Nyquist limit) and validates.
-        Returns the (target_freq, waveform) tuple. Switches waveform if compatibility rules require it.
-        When allow_zero is True, an exact 0.0 Hz static hold bypasses the
-        positivity gate (STATIC sham); every other value validates unchanged.
-        Normalizes -0.0 to 0.0 so logs never show negative zero.
+        Returns the (target_freq, waveform) tuple, degrading SQUARE to SINE when the
+        display cannot render a 50% duty cycle. Delegates to
+        core.safety.validate_hardware_limits, the single validation authority shared
+        with SessionController, so assessment and execution can never diverge.
         """
-        if target_freq == 0 and allow_zero:
-            return 0.0, waveform
-        # Nyquist limit: We need at least 2 frames to represent a full cycle (On/Off or Peak/Trough)
-        safe_ceiling = refresh_rate / 2.0
-
-        if target_freq > safe_ceiling:
-            raise ValueError(
-                f"Target frequency {target_freq} Hz exceeds safe representable limit "
-                f"({safe_ceiling} Hz) for the current monitor refresh rate ({refresh_rate} Hz).\n"
-                f"Please lower the frequency or use a higher refresh rate monitor (e.g., 144Hz, 240Hz)."
-            )
-
-        if target_freq <= 0:
-            raise ValueError("Frequency must be positive.")
-
-        # Case 2: Non-integer frames per cycle
-        # "If non-integer -> Allow sine wave only. Warn if square wave requested."
-        if waveform == WaveformType.SQUARE:
-            # Symmetry Check: We need integer frames per HALF cycle for 50% duty cycle
-            frames_per_half_cycle = refresh_rate / (2.0 * target_freq)
-            if abs(frames_per_half_cycle - round(frames_per_half_cycle)) > 0.01:
-                logger.warning(
-                    f"⚠ COMPATIBILITY WARNING: {target_freq} Hz cannot be precisely represented by a Square wave "
-                    f"on this display ({refresh_rate} Hz).\n"
-                    f"   Frames/Half-Cycle: {frames_per_half_cycle:.2f} (Non-Integer).\n"
-                    f"   Result: Duty Cycle Distortion (Not 50%).\n"
-                    f"   Action: Switching to SINE wave to maintain signal integrity."
-                )
-                return target_freq, WaveformType.SINE
-
-            # Risk Warning for Photosensitive Range (10-30Hz)
-            if 10 <= target_freq <= 30:
-                logger.warning(
-                    f"⚠ SAFETY WARNING: {target_freq} Hz Square Wave is in the high-risk photosensitive window (10-30 Hz).")
-
-        # Case 1: Integer or Sine/AM -> Safe
-        return target_freq, waveform
+        return validate_hardware_limits(target_freq, refresh_rate, waveform, allow_zero=allow_zero)
 
 
 class PhaseOscillator:

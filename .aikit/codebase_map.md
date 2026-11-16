@@ -7,10 +7,10 @@
 
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `11`
-- **Total Classes**: `26`
+- **Total Classes**: `27`
 - **Total Top-Level Functions**: `8`
-- **Total Class Methods**: `112`
-- **Total Source Lines**: `2685`
+- **Total Class Methods**: `114`
+- **Total Source Lines**: `2713`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`11` module(s))
@@ -62,7 +62,7 @@
 ### [`core/session_controller.py`](core/session_controller.py)
 > *Headless session controller managing entrainment execution lifecycle and process supervision.*
 
-**Size**: `88` lines (`3397` bytes)
+**Size**: `96` lines (`3858` bytes)
 
 **Classes:**
 - `class SessionState`
@@ -222,7 +222,7 @@
 ### [`test_mechanics.py`](test_mechanics.py)
 > *Unit test suite for NeuroOptic headless mechanics, protocol schemas, and safety validation.*
 
-**Size**: `152` lines (`5697` bytes)
+**Size**: `172` lines (`6752` bytes)
 
 **Classes:**
 - `class ProtocolModelTests`
@@ -243,6 +243,9 @@
   - Method `.test_controller_validation_updates_state()`
   - Method `.test_controller_build_command()`
   - Method `.test_controller_start_and_stop_mocked()`
+- `class ProtocolDegrationTests` - *Controller must apply the degraded waveform so risk matches execution.*
+  - Method `.test_validation_applies_duty_cycle_degradation_to_protocol()`
+  - Method `.test_validation_keeps_exactly_representable_square()`
 
 ---
 

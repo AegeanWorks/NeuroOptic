@@ -148,5 +148,25 @@ class SessionControllerTests(unittest.TestCase):
             mock_proc.terminate.assert_called_once()
 
 
+class ProtocolDegrationTests(unittest.TestCase):
+    """Controller must apply the degraded waveform so risk matches execution."""
+
+    def test_validation_applies_duty_cycle_degradation_to_protocol(self):
+        proto = EntrainmentProtocol(target_freq=13.0, waveform=WaveformType.SQUARE)
+        controller = SessionController(proto)
+        assessment = controller.validate(refresh_rate=60)
+        self.assertEqual(controller.protocol.waveform, WaveformType.SINE)
+        self.assertEqual(assessment.tier, RiskTier.CAUTION)
+        self.assertFalse(assessment.requires_human_confirmation)
+
+    def test_validation_keeps_exactly_representable_square(self):
+        proto = EntrainmentProtocol(target_freq=10.0, waveform=WaveformType.SQUARE)
+        controller = SessionController(proto)
+        assessment = controller.validate(refresh_rate=60)
+        self.assertEqual(controller.protocol.waveform, WaveformType.SQUARE)
+        self.assertEqual(assessment.tier, RiskTier.HIGH_RISK_PSE)
+        self.assertTrue(assessment.requires_human_confirmation)
+
+
 if __name__ == "__main__":
     unittest.main()

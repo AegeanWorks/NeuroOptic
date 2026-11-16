@@ -1,5 +1,6 @@
 """Headless session controller managing entrainment execution lifecycle and process supervision."""
 
+from dataclasses import replace
 from enum import Enum, auto
 import os
 import subprocess
@@ -31,9 +32,14 @@ class SessionController:
         self.last_assessment: Optional[PhoticRiskAssessment] = None
 
     def validate(self, refresh_rate: int = 60) -> PhoticRiskAssessment:
-        """Validates protocol against display refresh limits and calculates bio-safety risk."""
+        """Validates protocol against display refresh limits and calculates bio-safety risk.
+
+        Applies the validated (possibly duty-cycle-degraded) waveform back onto the
+        protocol so the photic risk assessment always matches the stimulus the
+        engine will actually render.
+        """
         allow_zero = (self.protocol.sham == ShamType.STATIC)
-        validate_hardware_limits(
+        safe_freq, safe_waveform = validate_hardware_limits(
             self.protocol.target_freq,
             refresh_rate,
             self.protocol.waveform,
@@ -46,6 +52,8 @@ class SessionController:
                 self.protocol.waveform,
                 allow_zero=allow_zero
             )
+        if (safe_freq, safe_waveform) != (self.protocol.target_freq, self.protocol.waveform):
+            self.protocol = replace(self.protocol, target_freq=safe_freq, waveform=safe_waveform)
         assessment = calculate_photic_risk(
             self.protocol.target_freq,
             self.protocol.waveform,

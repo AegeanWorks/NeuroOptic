@@ -51,6 +51,28 @@ class HeadlessLauncherTests(unittest.TestCase):
         self.assertIn("[SAFE]", self.app.safety_badge.cget("text"))
         self.assertEqual(self.app.launch_btn.cget("state"), "normal")
         self.assertEqual(self.app.abort_btn.cget("state"), "disabled")
+        self.assertIsNotNone(self.app.quick_gamma_btn)
+        self.assertIsNotNone(self.app.quick_alpha_btn)
+
+    def test_quick_start_gamma(self):
+        with mock.patch("subprocess.Popen") as mock_popen:
+            self.app.quick_start("gamma")
+            self.assertEqual(self.app.freq_var.get(), "40.0")
+            self.assertEqual(self.app.waveform_var.get(), "Sine")
+            self.assertEqual(self.app.ramp_var.get(), "5.0")
+            self.assertIn("[SAFE]", self.app.safety_badge.cget("text"))
+            self.assertEqual(self.app.launch_btn.cget("state"), "normal")
+            mock_popen.assert_called_once()
+
+    def test_quick_start_alpha(self):
+        with mock.patch("subprocess.Popen") as mock_popen:
+            self.app.quick_start("alpha")
+            self.assertEqual(self.app.freq_var.get(), "10.0")
+            self.assertEqual(self.app.waveform_var.get(), "Sine")
+            self.assertEqual(self.app.ramp_var.get(), "5.0")
+            self.assertIn("[CAUTION]", self.app.safety_badge.cget("text"))
+            self.assertEqual(self.app.launch_btn.cget("state"), "normal")
+            mock_popen.assert_called_once()
 
     def test_preset_change_theta_and_bands(self):
         self.app.on_preset_change("Theta (6Hz)")

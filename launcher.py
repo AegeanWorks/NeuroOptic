@@ -33,6 +33,22 @@ class NeuroOpticLauncher:
         main_frame = ctk.CTkFrame(root, fg_color="transparent")
         main_frame.pack(fill="both", expand=True, padx=20, pady=5)
 
+        # --- Quick Start Section (PRINCIPLE-011) ---
+        quick_frame = self.create_group_frame(main_frame, "Quick Start (1-Click Safe Entrainment)")
+        self.quick_gamma_btn = ctk.CTkButton(
+            quick_frame, text="⚡ 40Hz Gamma (Focus)",
+            command=lambda: self.quick_start("gamma"),
+            fg_color="#2b8a3e", hover_color="#237032", height=32
+        )
+        self.quick_gamma_btn.grid(row=1, column=0, padx=6, pady=6, sticky="ew")
+        self.quick_alpha_btn = ctk.CTkButton(
+            quick_frame, text="⚡ 10Hz Alpha (Relax)",
+            command=lambda: self.quick_start("alpha"),
+            fg_color="#1971c2", hover_color="#1864ab", height=32
+        )
+        self.quick_alpha_btn.grid(row=1, column=1, padx=6, pady=6, sticky="ew")
+        quick_frame.columnconfigure((0, 1), weight=1)
+
         # --- Frequency Section ---
         freq_frame = self.create_group_frame(main_frame, "Frequency Configuration")
 
@@ -161,6 +177,19 @@ class NeuroOpticLauncher:
         self.last_warning = (title, message)
         if not self.headless:
             messagebox.showwarning(title, message)
+
+    def quick_start(self, preset: str = "gamma"):
+        """One-click start with verified bio-safe parameters (PRINCIPLE-011)."""
+        is_alpha = preset.lower() == "alpha"
+        self.freq_var.set("10.0" if is_alpha else "40.0")
+        self.preset_var.set("Alpha (10Hz)" if is_alpha else "Gamma (40Hz)")
+        self.waveform_var.set("Sine")
+        self.mode_var.set("Full")
+        self.ramp_var.set("5.0")
+        self.sham_var.set("None")
+        self.duration_var.set("0.0")
+        self.update_safety_evaluation()
+        self.launch_engine()
 
     def on_preset_change(self, choice):
         for name, hz in PRESETS.items():

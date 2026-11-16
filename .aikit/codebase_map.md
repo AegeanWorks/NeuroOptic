@@ -6,14 +6,14 @@
 ---
 
 ## 📊 Codebase Metrics
-- **Total Python Modules**: `9`
-- **Total Classes**: `25`
-- **Total Top-Level Functions**: `4`
-- **Total Class Methods**: `98`
-- **Total Source Lines**: `2362`
+- **Total Python Modules**: `11`
+- **Total Classes**: `26`
+- **Total Top-Level Functions**: `8`
+- **Total Class Methods**: `110`
+- **Total Source Lines**: `2657`
 
 ## 🧭 Map Coverage
-- **Indexed**: python (`9` module(s))
+- **Indexed**: python (`11` module(s))
 - **Not indexed by this map**: none (no non-Python source files were found)
 
 ---
@@ -117,7 +117,7 @@
 ---
 
 ### [`launcher.py`](launcher.py)
-**Size**: `266` lines (`15296` bytes)
+**Size**: `295` lines (`16685` bytes)
 
 **Classes:**
 - `class NeuroOpticLauncher`
@@ -126,11 +126,25 @@
   - Method `.create_help_btn(parent, message)`
   - Method `.report_error(title, message)`
   - Method `.report_warning(title, message)`
+  - Method `.quick_start(preset)` - *One-click start with verified bio-safe parameters (PRINCIPLE-011).*
   - Method `.on_preset_change(choice)`
   - Method `.update_safety_evaluation(*args)`
   - Method `._parse_float(raw, label, min_val, max_val)`
   - Method `.launch_engine()`
   - Method `.stop_engine()`
+
+---
+
+### [`start.py`](start.py)
+> *NeuroOptic One-Click Starter (PRINCIPLE-011).*
+
+**Size**: `161` lines (`5643` bytes)
+
+**Functions:**
+- `def check_dependencies()` - *Check if all runtime dependencies are importable.*
+- `def print_remediation_error(what, why, fix)` - *Print actionable remediation triad adhering to PRINCIPLE-011 R6.*
+- `def build_quick_command(preset, dry_run)` - *Construct safe entrainment command for one-click start.*
+- `def main()`
 
 ---
 
@@ -182,7 +196,7 @@
 ### [`test_launcher.py`](test_launcher.py)
 > *Automated headless unit test suite for NeuroOpticLauncher GUI controller.*
 
-**Size**: `133` lines (`4922` bytes)
+**Size**: `155` lines (`6073` bytes)
 
 **Classes:**
 - `class HeadlessLauncherTests`
@@ -190,6 +204,8 @@
   - Method `.tearDownClass()`
   - Method `.setUp()`
   - Method `.test_default_state_and_safe_badge()`
+  - Method `.test_quick_start_gamma()`
+  - Method `.test_quick_start_alpha()`
   - Method `.test_preset_change_theta_and_bands()`
   - Method `.test_high_risk_pse_disables_start_button()`
   - Method `.test_high_risk_authorization_enables_start_button()`
@@ -225,5 +241,24 @@
   - Method `.test_controller_validation_updates_state()`
   - Method `.test_controller_build_command()`
   - Method `.test_controller_start_and_stop_mocked()`
+
+---
+
+### [`test_start.py`](test_start.py)
+> *Unit tests for NeuroOptic One-Click Starter (start.py).*
+
+**Size**: `83` lines (`3042` bytes)
+
+**Classes:**
+- `class StartScriptTests`
+  - Method `.test_check_dependencies_returns_true_in_configured_environment()`
+  - Method `.test_check_dependencies_detects_missing_module()`
+  - Method `.test_build_quick_command_gamma()`
+  - Method `.test_build_quick_command_alpha_dry_run()`
+  - Method `.test_print_remediation_error_format()`
+  - Method `.test_main_check_flag()`
+  - Method `.test_main_dry_run_gamma()`
+  - Method `.test_main_missing_dependencies_exits_one()`
+  - Method `.test_main_quick_popen_invoked()`
 
 ---

@@ -45,6 +45,17 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   5. Implement `test_launcher.py` for automated headless testing of the controller without opening OS windows.
 - **Consequences**: NeuroOptic is fully operable and testable by autonomous subagents without a display; photic driving safety is strictly enforced; 27 new tests bring the regression shield to 51 green tests running in ~0.5s; all 5 gates pass cleanly.
 
+### ADR-005: One-click safe start via GUI quick buttons and zero-friction CLI entrypoint
+- **Date**: 2026-11-16
+- **Status**: Accepted
+- **Context**: Users and autonomous subagents required multi-step configuration to start safe entrainment sessions, conflicting with PRINCIPLE-011 (Zero-Friction Onboarding & Instant Usability). In addition, on Windows or headless CI environments, launching required knowing specific CLI arguments or opening the CustomTkinter GUI without direct quick-start presets.
+- **Decision**: 
+  1. Add a dedicated "Quick Start (1-Click Safe Entrainment)" section to `launcher.py` with one-click buttons for primary safe bands: 40Hz Gamma (`#2b8a3e`, Sine, 5s ramp) and 10Hz Alpha (`#1971c2`, Sine, 5s ramp). These automatically set safe parameters and invoke `launch_engine()`.
+  2. Implement `projects/NeuroOptic/start.py` as a pure-stdlib, zero-prompt entry point supporting 1-click GUI launching, direct quick-start (`--quick`, `--alpha`), headless dry-run (`--dry-run`), and environment verification (`--check`) with Actionable Remediation Triad error formatting.
+  3. Provide `projects/NeuroOptic/start.bat` for native Windows 1-click execution.
+  4. Expand test suites: `test_launcher.py` (quick start button and method verification) and `test_start.py` (9 unit tests verifying CLI flags, dependency detection, dry runs, and error formatting), bringing the test shield to 62 passing tests.
+- **Consequences**: NeuroOptic achieves zero-friction onboarding and instant usability across GUI and headless subagent modalities; all 5 Phase 4 quality gates pass cleanly.
+
 ## Licensing migration (agpl-final)
 
 - New versions use the Aegean License 1.1 (AL-1.1); versions up to and including `agpl-final` remain under GNU AGPL-3.0.

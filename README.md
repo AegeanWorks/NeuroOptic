@@ -39,9 +39,12 @@ NeuroOptic/
 ├── entrainment_engine.py      <- GLFW/OpenGL entrainment engine and CLI
 ├── launcher.py                <- customtkinter GUI controller
 ├── requirements.txt
+├── start.bat                  <- 1-click Windows batch launcher (PRINCIPLE-011)
+├── start.py                   <- 1-click starter with safe defaults & dry-run
 ├── test_entrainment_engine.py <- unit tests for the engine's pure logic
 ├── test_launcher.py           <- automated headless tests for the controller
 ├── test_mechanics.py          <- unit tests for headless protocol mechanics
+├── test_start.py              <- unit tests for one-click starter
 └── .aikit/                    <- this project's memory: record, ledger, decisions, map
 ```
 
@@ -78,6 +81,25 @@ NeuroOptic is a research-grade visual oscillator designed for precise brainwave 
     ```
 
 ### Usage
+
+#### ⚡ One-Click Start (Zero-Friction Onboarding)
+Launch NeuroOptic instantly with verified bio-safe presets (PRINCIPLE-011):
+```bash
+# Windows: double-click start.bat or run:
+start.bat
+
+# Multi-platform 1-click launch to GUI:
+python start.py
+
+# 1-click start safe 40Hz Gamma entrainment directly (5s ramp):
+python start.py --quick
+
+# 1-click start safe 10Hz Alpha entrainment directly (5s ramp):
+python start.py --alpha
+
+# Headless parameter & dependency validation:
+python start.py --dry-run
+```
 
 #### Graphical Interface (Recommended)
 Launch the GUI controller:

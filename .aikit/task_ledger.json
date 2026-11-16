@@ -1,54 +1,22 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "neurooptic-subagent-ui-mechanics",
-    "last_phase": "phase 5",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794844939.4542587,
-    "owner": "antigravity:subagent-ui",
-    "started_by": "antigravity:subagent-ui",
+    "task_id": "neurooptic-one-click-start",
+    "last_phase": "phase 4",
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1794845736.9935977,
+    "owner": "antigravity:one-click-start",
+    "started_by": "antigravity:one-click-start",
     "continuations": [],
     "workspaces": [
       {
         "name": "NeuroOptic",
         "path": "projects/NeuroOptic"
       }
-    ],
-    "completed_at": 1794844966.283976,
-    "completed_head": "49491384d6913f8eb0215ecbfb182668c5df9bec",
-    "completed_tree": "d5cbdaba07bd7cca4a7f04a2cf55c1124d577532"
+    ]
   },
   "checkpoints": [
-    {
-      "task_id": "neurooptic-wave-audit-0-20",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/2] Audit waves 0,10,20 (commits 0-29): survey code evolution, verify claims by reproduction, analyze findings",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793722760.408965,
-      "timestamp_str": "2026-11-03 19:19:20",
-      "agent": "kilo:audit",
-      "impact_assessment": {
-        "why": "Wave 0 built engine/launcher with STATIC sham zeroing left freq while validate_frequency rejects 0, so --sham static can never initialize; right hemifield also left flickering in SPLIT+STATIC",
-        "benefits": "Static control condition becomes usable; split-mode sham consistent; existing Nyquist and positivity guards unchanged for all non-static paths",
-        "risks": "contract: validate_frequency gains opt-in allow_zero plus STATIC zeroes both hemifields; dependency: none; concurrency: none; state: engine init and hardware validation only",
-        "mitigation": "Failing-first unit proof for allow_zero and STATIC both-zero, keep default rejection test green, run full unittest plus 4/4 aikit gates, inspect staged diff before commit"
-      },
-      "plan_digest": "f4b01f0694ce681e660195aaff06b06aeb4a391102dcaf3154b1e9114ecd6ed1"
-    },
-    {
-      "task_id": "neurooptic-wave-audit-0-20",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[2/2] Phase 4: checklists: passed; 4/4 project gates, 21 tests",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793722833.5389056,
-      "timestamp_str": "2026-11-03 19:20:33",
-      "agent": "kilo:audit"
-    },
     {
       "task_id": "neurooptic-wave-audit-0-20",
       "phase": "completed",
@@ -316,6 +284,51 @@
         ],
         "forced": false
       }
+    },
+    {
+      "task_id": "neurooptic-one-click-start",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/3] Plan: Add one-click quick start actions to launcher and root entrypoint",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794845412.0776536,
+      "timestamp_str": "2026-11-16 19:10:12",
+      "agent": "antigravity:one-click-start",
+      "impact_assessment": {
+        "why": "Enable zero-friction onboarding and instant one-click entrainment session start conforming to PRINCIPLE-011 and photic bio-safety invariants",
+        "benefits": "Instant safe entrainment (40Hz Gamma, 10Hz Alpha) in 1 click from GUI or script; zero configuration hurdles for human users and subagents",
+        "risks": "contract: adds quick_start methods and root start script; dependency: pure stdlib / existing requirements; concurrency: subprocess supervision unchanged; state: launcher UI frame and entries updated",
+        "mitigation": "Enforce SAFE photic risk tier on quick start presets; retain 300-line budget in launcher.py; test thoroughly in headless test suite; 5/5 gates"
+      },
+      "plan_digest": "b21e8c4e7a172e263089197607586b447d5df32078c7cc6a42e6d25fdac034e9",
+      "handoff": {
+        "next": "implement quick start buttons in launcher.py and zero-config start.py"
+      },
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-one-click-start",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/3] Phase 4: verified 5/5 gates and 62 tests passing for one-click start",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794845736.9935977,
+      "timestamp_str": "2026-11-16 19:15:36",
+      "agent": "antigravity:one-click-start",
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
     }
   ]
 }

@@ -4,7 +4,7 @@
     "task_id": "neurooptic-subagent-ui-mechanics",
     "last_phase": "phase 5",
     "active_phase": 5,
-    "status": "in_progress",
+    "status": "completed",
     "updated_at": 1794844939.4542587,
     "owner": "antigravity:subagent-ui",
     "started_by": "antigravity:subagent-ui",
@@ -14,19 +14,12 @@
         "name": "NeuroOptic",
         "path": "projects/NeuroOptic"
       }
-    ]
+    ],
+    "completed_at": 1794844966.283976,
+    "completed_head": "49491384d6913f8eb0215ecbfb182668c5df9bec",
+    "completed_tree": "d5cbdaba07bd7cca4a7f04a2cf55c1124d577532"
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'reforge:run-1' completed successfully.",
-      "status": "completed",
-      "timestamp": 1793293522.8922787,
-      "timestamp_str": "2026-10-29 20:05:22",
-      "agent": "opencode:reforge-followup"
-    },
     {
       "task_id": "neurooptic-wave-audit-0-20",
       "phase": "phase 2",
@@ -306,6 +299,23 @@
           "path": "projects/NeuroOptic"
         }
       ]
+    },
+    {
+      "task_id": "neurooptic-subagent-ui-mechanics",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'neurooptic-subagent-ui-mechanics' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794844966.431471,
+      "timestamp_str": "2026-11-16 19:02:46",
+      "agent": "antigravity:subagent-ui",
+      "head": "49491384d6913f8eb0215ecbfb182668c5df9bec",
+      "delivery": {
+        "roots": [
+          "."
+        ],
+        "forced": false
+      }
     }
   ]
 }

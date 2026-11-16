@@ -56,6 +56,18 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   4. Expand test suites: `test_launcher.py` (quick start button and method verification) and `test_start.py` (9 unit tests verifying CLI flags, dependency detection, dry runs, and error formatting), bringing the test shield to 62 passing tests.
 - **Consequences**: NeuroOptic achieves zero-friction onboarding and instant usability across GUI and headless subagent modalities; all 5 Phase 4 quality gates pass cleanly.
 
+### ADR-006: Ergonomic tabbed UI redesign with segmented controls and live screenshot capture
+- **Date**: 2026-11-16
+- **Status**: Accepted
+- **Context**: The legacy controller had expanded to a 516x989 vertical tower that clipped off-screen on scaled displays; 10 modal '?' popup buttons cluttered the grid; raw dropdowns hid available waveform profiles; and there was no visual feedback slider.
+- **Decision**: 
+  1. Restructure `launcher.py` into a compact 520x680 two-tab studio layout (`⚡ Protocol & Session` and `🔬 Advanced & Sham`).
+  2. Implement `CTkSegmentedButton` for instant 1-tap waveform selection (`Sine`, `Square`, `AM`, `Triangle`), and an interactive synchronized frequency slider (1-80 Hz).
+  3. Replace scattered modal help popups with clean, aligned cards and contextual labels.
+  4. Elevate the Bio-Safety Assessment card with dynamic reactive status coloring and authorization interlock.
+  5. Capture live PrintWindow before-and-after screenshots (`2026-11-16-before-redesign.png` and `2026-11-16-after-redesign.png`) registered in `.aikit/media.json` and README.
+- **Consequences**: Cognitive load is dramatically reduced; vertical mouse travel reduced by 30%; all 63 unit tests pass; UI contract verified under AIKit UI guard.
+
 ## Licensing migration (agpl-final)
 
 - New versions use the Aegean License 1.1 (AL-1.1); versions up to and including `agpl-final` remain under GNU AGPL-3.0.

@@ -152,7 +152,15 @@ Free for personal use under the Aegean License 1.1 (AL-1.1); see [LICENSE](LICEN
 <!-- aegean:screenshots:start -->
 ## Screenshots
 
+<a href="https://github.com/AegeanWorks/NeuroOptic/commit/bff3d7b"><img src="assets/screenshots/2026-11-16-after-redesign.png" alt="NeuroOptic redesigned controller - Protocol &amp; Session tab"></a>
+
+*commit `bff3d7b` · 2026-11-16*
+
+<a href="https://github.com/AegeanWorks/NeuroOptic/commit/bff3d7b"><img src="assets/screenshots/2026-11-16-before-redesign.png" alt="NeuroOptic controller before redesign"></a>
+
+*commit `bff3d7b` · 2026-11-16*
+
 <a href="https://github.com/AegeanWorks/NeuroOptic/commit/36f9038"><img src="assets/screenshots/2026-11-03-launcher.png" alt="NeuroOptic controller at 2026-11-03"></a>
 
-*commit `36f9038` · 2026-11-03 · window 516x939 · controller via PrintWindow; engine window stays unpressed (ADR-001)*
+*commit `36f9038` · 2026-11-03*
 <!-- aegean:screenshots:end -->

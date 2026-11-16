@@ -43,6 +43,44 @@
   },
   "screenshots": [
     {
+      "path": "assets/screenshots/2026-11-16-after-redesign.png",
+      "alt": "NeuroOptic redesigned controller - Protocol & Session tab",
+      "caption": "Redesigned NeuroOptic controller: tabbed layout, quick presets, frequency slider, segmented waveform selector, and bio-safety interlock card.",
+      "commit": "bff3d7b7224778c040abd1e12038370846abc3ed",
+      "taken_at": "2026-11-16",
+      "viewport": "536x719",
+      "width": 536,
+      "height": 719,
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:antigravity",
+        "method": "vision",
+        "notes": "Redesigned controller: 2-tab ergonomic layout, clean segmented buttons, slider, and bio-safety card.",
+        "score": 98,
+        "reviewed_at": "2026-11-16"
+      }
+    },
+    {
+      "path": "assets/screenshots/2026-11-16-before-redesign.png",
+      "alt": "NeuroOptic controller before redesign",
+      "caption": "Legacy controller prior to redesign: 516x989 vertical tower with 10 modal help buttons.",
+      "commit": "bff3d7b7224778c040abd1e12038370846abc3ed",
+      "taken_at": "2026-11-16",
+      "viewport": "516x989",
+      "width": 516,
+      "height": 989,
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:antigravity",
+        "method": "vision",
+        "notes": "Legacy baseline capture before tabbed ergonomic redesign.",
+        "score": 85,
+        "reviewed_at": "2026-11-16"
+      }
+    },
+    {
       "path": "assets/screenshots/2026-11-03-launcher.png",
       "alt": "NeuroOptic controller at 2026-11-03",
       "caption": "Controller from python launcher.py: frequency, stimulation, session, sham and display sections with START. Engine window opens only on START and stays unpressed.",

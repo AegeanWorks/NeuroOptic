@@ -9,8 +9,8 @@
 - **Total Python Modules**: `11`
 - **Total Classes**: `26`
 - **Total Top-Level Functions**: `8`
-- **Total Class Methods**: `110`
-- **Total Source Lines**: `2657`
+- **Total Class Methods**: `112`
+- **Total Source Lines**: `2700`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`11` module(s))
@@ -117,11 +117,12 @@
 ---
 
 ### [`launcher.py`](launcher.py)
-**Size**: `295` lines (`16685` bytes)
+**Size**: `320` lines (`17692` bytes)
 
 **Classes:**
 - `class NeuroOpticLauncher`
   - Method `.__init__(root, headless)`
+  - Method `._on_slider_change(val)`
   - Method `.create_group_frame(parent, title)`
   - Method `.create_help_btn(parent, message)`
   - Method `.report_error(title, message)`
@@ -196,7 +197,7 @@
 ### [`test_launcher.py`](test_launcher.py)
 > *Automated headless unit test suite for NeuroOpticLauncher GUI controller.*
 
-**Size**: `155` lines (`6073` bytes)
+**Size**: `173` lines (`6826` bytes)
 
 **Classes:**
 - `class HeadlessLauncherTests`
@@ -204,6 +205,7 @@
   - Method `.tearDownClass()`
   - Method `.setUp()`
   - Method `.test_default_state_and_safe_badge()`
+  - Method `.test_tabview_and_slider_synchronization()`
   - Method `.test_quick_start_gamma()`
   - Method `.test_quick_start_alpha()`
   - Method `.test_preset_change_theta_and_bands()`

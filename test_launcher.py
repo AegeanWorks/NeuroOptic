@@ -53,6 +53,24 @@ class HeadlessLauncherTests(unittest.TestCase):
         self.assertEqual(self.app.abort_btn.cget("state"), "disabled")
         self.assertIsNotNone(self.app.quick_gamma_btn)
         self.assertIsNotNone(self.app.quick_alpha_btn)
+        self.assertIsNotNone(self.app.tabview)
+        self.assertIsNotNone(self.app.freq_slider)
+        self.assertIsNotNone(self.app.waveform_seg)
+
+    def test_tabview_and_slider_synchronization(self):
+        # Tabview switching
+        self.assertEqual(self.app.tabview.get(), "⚡ Protocol & Session")
+        self.app.tabview.set("🔬 Advanced & Sham")
+        self.assertEqual(self.app.tabview.get(), "🔬 Advanced & Sham")
+        self.app.tabview.set("⚡ Protocol & Session")
+
+        # Slider to var
+        self.app._on_slider_change(25.0)
+        self.assertEqual(self.app.freq_var.get(), "25.0")
+
+        # Var to slider
+        self.app.freq_var.set("18.5")
+        self.assertAlmostEqual(self.app.freq_slider.get(), 18.5, delta=0.2)
 
     def test_quick_start_gamma(self):
         with mock.patch("subprocess.Popen") as mock_popen:

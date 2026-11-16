@@ -9,8 +9,8 @@
 - **Total Python Modules**: `11`
 - **Total Classes**: `29`
 - **Total Top-Level Functions**: `10`
-- **Total Class Methods**: `123`
-- **Total Source Lines**: `2887`
+- **Total Class Methods**: `125`
+- **Total Source Lines**: `2927`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`11` module(s))
@@ -118,13 +118,14 @@
 ---
 
 ### [`launcher.py`](launcher.py)
-**Size**: `320` lines (`17692` bytes)
+**Size**: `339` lines (`18537` bytes)
 
 **Classes:**
 - `class NeuroOpticLauncher`
   - Method `.__init__(root, headless)`
   - Method `._on_slider_change(val)`
   - Method `.create_group_frame(parent, title)`
+  - Method `._probe_engine(cmd)` - *Validates the built command with an engine dry-run probe; returns (ok, reason).*
   - Method `.create_help_btn(parent, message)`
   - Method `.report_error(title, message)`
   - Method `.report_warning(title, message)`
@@ -205,7 +206,7 @@
 ### [`test_launcher.py`](test_launcher.py)
 > *Automated headless unit test suite for NeuroOpticLauncher GUI controller.*
 
-**Size**: `173` lines (`6826` bytes)
+**Size**: `194` lines (`8123` bytes)
 
 **Classes:**
 - `class HeadlessLauncherTests`
@@ -216,6 +217,7 @@
   - Method `.test_tabview_and_slider_synchronization()`
   - Method `.test_quick_start_gamma()`
   - Method `.test_quick_start_alpha()`
+  - Method `.test_launch_preflight_blocks_display_incompatible_protocol()`
   - Method `.test_preset_change_theta_and_bands()`
   - Method `.test_high_risk_pse_disables_start_button()`
   - Method `.test_high_risk_authorization_enables_start_button()`

@@ -176,10 +176,18 @@ class NeuroOpticLauncher:
             title_lbl = ctk.CTkLabel(frame, text=title, font=("Segoe UI", 11, "bold"), text_color="#cbd5e1")
             title_lbl.grid(row=0, column=0, columnspan=4, sticky="w", padx=10, pady=(3, 0))
         return frame
-        frame.pack(fill="x", pady=4)
-        title_lbl = ctk.CTkLabel(frame, text=title, font=("Segoe UI", 12, "bold"))
-        title_lbl.grid(row=0, column=0, columnspan=4, sticky="w", padx=10, pady=(4, 0))
-        return frame
+
+    def _probe_engine(self, cmd):
+        """Validates the built command with an engine dry-run probe; returns (ok, reason)."""
+        probe = list(cmd) + ['--dry-run']
+        try:
+            proc = subprocess.run(probe, capture_output=True, text=True, timeout=30)
+        except (subprocess.TimeoutExpired, OSError) as exc:
+            return False, str(exc)
+        if proc.returncode != 0:
+            lines = (proc.stderr or '').strip().splitlines()
+            return False, '\n'.join(lines[-4:]) if lines else 'Engine dry-run returned non-zero code.'
+        return True, ''
 
     def create_help_btn(self, parent, message):
         return ctk.CTkButton(parent, text="?", width=18, height=18, corner_radius=9,
@@ -300,6 +308,17 @@ class NeuroOpticLauncher:
                '--brightness', str(brightness), '--phase', str(phase), '--phase-right', str(r_phase)]
         if r_freq > 0:
             cmd.extend(['--freq-right', str(r_freq)])
+
+        ok, reason = self._probe_engine(cmd)
+        if not ok:
+            self.report_error(
+                "Launch preflight failed",
+                "Your display cannot render this protocol.\n"
+                f"{reason}\n\n"
+                "Fix: pick a target frequency at or below refresh rate / 2 "
+                "(10 Hz Alpha is safe on every display), or use a monitor with a "
+                "higher refresh rate (40 Hz Gamma needs refresh >= 85 Hz).")
+            return
 
         try:
             self.current_process = subprocess.Popen(cmd)  # hygiene: allow fire-and-forget launch; the engine must outlive the launcher

@@ -1,13 +1,13 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "neurooptic-ui-redesign-analysis",
+    "task_id": "neurooptic-validation-unification",
     "last_phase": "phase 4",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794846923.533496,
-    "owner": "antigravity:ui-architect",
-    "started_by": "antigravity:ui-architect",
+    "updated_at": 1794853635.6970782,
+    "owner": "claude:local",
+    "started_by": "claude:local",
     "continuations": [],
     "workspaces": [
       {
@@ -15,120 +15,11 @@
         "path": "projects/NeuroOptic"
       }
     ],
-    "completed_at": 1794846954.7587643,
-    "completed_head": "8edb894626bb325a3d93ec152d12081a64f6f62a",
-    "completed_tree": "4fd9f39f9b8bfc50dc6a4779b6224373afbdfde0"
+    "completed_at": 1794853680.0221097,
+    "completed_head": "e04056bbf069ad773d92399867cd2ff4b3b77ea7",
+    "completed_tree": "4b53c27ebbd5d8f7f7d1caa3ad1e790c99cbdf4d"
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-4",
-      "phase": "reforge run",
-      "phase_num": 3,
-      "description": "run started (start=36, step=4, stop=None)",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794841665.9431283,
-      "timestamp_str": "2026-11-16 18:07:45",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-4",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: window 36, 36 commit(s), 19 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit, 7 binary not analysed",
-      "files_affected": [
-        "assets/artwork.jpg",
-        "assets/logo.jpg",
-        "assets/logo.png",
-        "assets/screenshots/2026-11-03-launcher.png",
-        "assets/social-preview.jpg",
-        "assets/social-preview.png",
-        "banner.jpg"
-      ],
-      "status": "in_progress",
-      "timestamp": 1794841677.191226,
-      "timestamp_str": "2026-11-16 18:07:57",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-4",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: stage 1 host review reviewed; run active; coverage 180/180",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794842804.774305,
-      "timestamp_str": "2026-11-16 18:26:44",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-4",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: stage 1 host review reviewed; run active; coverage 180/180",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794842841.186348,
-      "timestamp_str": "2026-11-16 18:27:21",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-4",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: window 40, 4 commit(s), 5 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794842850.2411387,
-      "timestamp_str": "2026-11-16 18:27:30",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-4",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: stage 2 host review reviewed; run completed; coverage 9/9",
-      "files_affected": [],
-      "status": "completed",
-      "timestamp": 1794843020.5468433,
-      "timestamp_str": "2026-11-16 18:30:20",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-4",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: stage 2 host review reviewed; run completed; coverage 9/9",
-      "files_affected": [],
-      "status": "completed",
-      "timestamp": 1794843022.7707338,
-      "timestamp_str": "2026-11-16 18:30:22",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "neurooptic-subagent-ui-mechanics",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/5] Extract decoupled core mechanics (core/protocol.py, core/safety.py, core/session_controller.py) and declare ADR-271 mechanics contract",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794843967.4477558,
-      "timestamp_str": "2026-11-16 18:46:07",
-      "agent": "antigravity:subagent-ui",
-      "impact_assessment": {
-        "why": "Enable headless subagent controllability, automated UI testing, and bio-safety validation for NeuroOptic visual entrainment.",
-        "benefits": "Zero-display execution for agents, eliminates modal dialog lockups, provides declarative JSON protocol schemas, 100% test coverage for controller logic.",
-        "risks": "contract: none; dependency: none; concurrency: none; state: none",
-        "mitigation": "Preserve exact CLI arguments in entrainment_engine.py and GUI bindings in launcher.py while routing through pure core mechanics."
-      },
-      "plan_digest": "2345e53928a04c9991098b984966d83bfa4f285fbfcff55c69f8051d985cb041",
-      "workspaces": [
-        {
-          "name": "NeuroOptic",
-          "path": "projects/NeuroOptic"
-        }
-      ]
-    },
     {
       "task_id": "neurooptic-subagent-ui-mechanics",
       "phase": "phase 4",
@@ -353,6 +244,156 @@
       "timestamp_str": "2026-11-16 19:35:54",
       "agent": "antigravity:ui-architect",
       "head": "8edb894626bb325a3d93ec152d12081a64f6f62a",
+      "delivery": {
+        "roots": [
+          "."
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/4] Unify frequency validation in core.safety; engine delegates",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794848489.0234096,
+      "timestamp_str": "2026-11-16 20:01:29",
+      "agent": "claude:local",
+      "impact_assessment": {
+        "why": "SessionController.validate discards the degraded waveform from core.safety's duplicate Nyquist check; risk assessment (SQUARE=0.95 PSE) diverges from what the engine runs (degraded to SINE), and two validation copies can drift",
+        "benefits": "Single source of truth for Nyquist/duty-cycle rules; controller applies the degraded waveform so the photic assessment matches executed stimulus; sham-seed reproducible end to end",
+        "risks": "contract: engine public validate_frequency signature kept; dependency: core must not import engine (cycle); concurrency: none - pure functions; state: frozen protocol replaced via dataclasses.replace",
+        "mitigation": "Engine delegates to core.safety.validate_hardware_limits keeping signature and return; controller uses returned tuple; failing-first tests for degradation application and sham_seed CLI roundtrip; full check gate plus unittest before each commit"
+      },
+      "plan_digest": "ddaa829aa6aeebca3f0e5a9733e179707e0a131225c28e6a304a02064e65339b",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[1/4] Unify frequency validation in core.safety; engine delegates. checklists: passed (63 tests OK, check gates 5/5, codebase map regenerated)",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794848667.3147917,
+      "timestamp_str": "2026-11-16 20:04:27",
+      "agent": "claude:local",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/4] Controller applies duty-cycle degraded waveform; risk matches execution. checklists: passed (65 tests OK, check gates 5/5)",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794848722.6877804,
+      "timestamp_str": "2026-11-16 20:05:22",
+      "agent": "claude:local",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[3/4] Sham-seed reproducibility via --sham-seed CLI and to_cli_args; from_dict accepts CLI sham/waveform tokens. checklists: passed (69 tests OK, check gates 5/5)",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794849695.6170008,
+      "timestamp_str": "2026-11-16 20:21:35",
+      "agent": "claude:local",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/5] Re-plan: 1 validation unify, 2 degraded waveform, 3 sham-seed done; 4 dry-run safety validation, 5 launcher dead-code (needs human UI review to finish the open UI task)",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794850456.8956199,
+      "timestamp_str": "2026-11-16 20:34:16",
+      "agent": "claude:local",
+      "impact_assessment": {
+        "why": "Re-planned from [4/4]: ui finish refuses agent-only close on the launcher surface, so dead-code removal moves behind a human review; dry-run validation promoted in its place",
+        "benefits": "Dry-run becomes a true safety probe; gate attribution stays honest",
+        "risks": "contract: dry-run exit codes unchanged (0 valid, 1 invalid); dependency: none new; concurrency: none; state: none",
+        "mitigation": "Failing-first subprocess test for out-of-Nyquist dry-run; full check before commit"
+      },
+      "plan_digest": "8dd70e8acf8ca84e43bea38f22e4f871298b0899db7839a45612b5be0c89476e",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[4/5] Engine dry-run validates against GLFW-detected refresh; start.py preflights every quick launch; ADR-007 records the fail-loudly decision and renamed test_main_dry_run. checklists: passed (73 tests OK, check gates 5/5)",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794851926.0479295,
+      "timestamp_str": "2026-11-16 20:58:46",
+      "agent": "claude:local",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[5/5] Launcher: dead-code removal and engine dry-run preflight (launch_engine stops with remediation); surface inventory amended to include its harness; closed under G-001 waiver. checklists: passed (74 tests OK, check gates 5/5, ui verify + finish green)",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794853635.6970782,
+      "timestamp_str": "2026-11-16 21:27:15",
+      "agent": "claude:local",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-validation-unification",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'neurooptic-validation-unification' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794853680.0661936,
+      "timestamp_str": "2026-11-16 21:28:00",
+      "agent": "claude:local",
+      "head": "e04056bbf069ad773d92399867cd2ff4b3b77ea7",
       "delivery": {
         "roots": [
           "."

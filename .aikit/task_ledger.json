@@ -5,7 +5,7 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794844626.8666077,
+    "updated_at": 1794844875.8851845,
     "owner": "antigravity:subagent-ui",
     "started_by": "antigravity:subagent-ui",
     "continuations": [],
@@ -17,17 +17,6 @@
     ]
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "resumed",
-      "phase_num": 3,
-      "description": "Resumed 'reforge:run-1' after a pause",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793293515.9566147,
-      "timestamp_str": "2026-10-29 20:05:15",
-      "agent": "opencode"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "phase 4",
@@ -285,6 +274,24 @@
       "status": "in_progress",
       "timestamp": 1794844626.8666077,
       "timestamp_str": "2026-11-16 18:57:06",
+      "agent": "antigravity:subagent-ui",
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-subagent-ui-mechanics",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[milestone 4/5] Add automated headless test suite for launcher",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794844875.8851845,
+      "timestamp_str": "2026-11-16 19:01:15",
       "agent": "antigravity:subagent-ui",
       "checklists": "passed",
       "workspaces": [

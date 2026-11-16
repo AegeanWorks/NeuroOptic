@@ -40,6 +40,7 @@ NeuroOptic/
 ├── launcher.py                <- customtkinter GUI controller
 ├── requirements.txt
 ├── test_entrainment_engine.py <- unit tests for the engine's pure logic
+├── test_launcher.py           <- automated headless tests for the controller
 ├── test_mechanics.py          <- unit tests for headless protocol mechanics
 └── .aikit/                    <- this project's memory: record, ledger, decisions, map
 ```

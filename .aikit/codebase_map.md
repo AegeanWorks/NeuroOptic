@@ -6,14 +6,14 @@
 ---
 
 ## 📊 Codebase Metrics
-- **Total Python Modules**: `8`
-- **Total Classes**: `24`
+- **Total Python Modules**: `9`
+- **Total Classes**: `25`
 - **Total Top-Level Functions**: `4`
-- **Total Class Methods**: `86`
-- **Total Source Lines**: `2229`
+- **Total Class Methods**: `98`
+- **Total Source Lines**: `2362`
 
 ## 🧭 Map Coverage
-- **Indexed**: python (`8` module(s))
+- **Indexed**: python (`9` module(s))
 - **Not indexed by this map**: none (no non-Python source files were found)
 
 ---
@@ -176,6 +176,28 @@
   - Method `.test_preset_theta_sets_frequency()`
   - Method `.test_dry_run_flag_enabled()`
   - Method `.test_build_engine_from_declarative_protocol()`
+
+---
+
+### [`test_launcher.py`](test_launcher.py)
+> *Automated headless unit test suite for NeuroOpticLauncher GUI controller.*
+
+**Size**: `133` lines (`4922` bytes)
+
+**Classes:**
+- `class HeadlessLauncherTests`
+  - Method `.setUpClass()`
+  - Method `.tearDownClass()`
+  - Method `.setUp()`
+  - Method `.test_default_state_and_safe_badge()`
+  - Method `.test_preset_change_theta_and_bands()`
+  - Method `.test_high_risk_pse_disables_start_button()`
+  - Method `.test_high_risk_authorization_enables_start_button()`
+  - Method `.test_caution_tier_for_smooth_waveform_in_driving_band()`
+  - Method `.test_invalid_frequency_records_error_without_popup()`
+  - Method `.test_negative_frequency_rejected()`
+  - Method `.test_right_frequency_warning_outside_split_mode()`
+  - Method `.test_mocked_launch_and_stop_lifecycle()`
 
 ---
 

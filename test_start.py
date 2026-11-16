@@ -58,10 +58,20 @@ class StartScriptTests(unittest.TestCase):
             ret = start.main()
             self.assertEqual(ret, 0)
 
-    def test_main_dry_run_gamma(self):
-        with mock.patch.object(sys, "argv", ["start.py", "--dry-run"]):
+    def test_main_dry_run(self):
+        # 10 Hz Alpha is representable on every consumer display; 40 Hz Gamma dry-runs
+        # fail loudly on refresh rates < 85 Hz (ADR-007).
+        with mock.patch.object(sys, "argv", ["start.py", "--dry-run", "--alpha"]):
             ret = start.main()
             self.assertEqual(ret, 0)
+
+    def test_main_dry_run_gamma_blocked_below_85hz(self):
+        # ADR-007: 40 Hz needs refresh >= 85 Hz; the engine dry-run probe reports the
+        # Nyquist violation instead of silently launching a doomed session.
+        with mock.patch("start.probe_engine", return_value=(False, "exceeds safe representable limit")):
+            with mock.patch.object(sys, "argv", ["start.py", "--dry-run"]):
+                ret = start.main()
+                self.assertEqual(ret, 1)
 
     def test_main_missing_dependencies_exits_one(self):
         with mock.patch("start.check_dependencies", return_value=(False, ["nonexistent_pkg"])):
@@ -70,13 +80,22 @@ class StartScriptTests(unittest.TestCase):
                 self.assertEqual(ret, 1)
 
     def test_main_quick_popen_invoked(self):
-        with mock.patch("subprocess.Popen") as mock_popen:
-            with mock.patch.object(sys, "argv", ["start.py", "--quick"]):
-                ret = start.main()
-                self.assertEqual(ret, 0)
-                mock_popen.assert_called_once()
-                cmd = mock_popen.call_args[0][0]
-                self.assertIn("40.0", cmd)
+        with mock.patch.object(start, "probe_engine", return_value=(True, "")):
+            with mock.patch("subprocess.Popen") as mock_popen:
+                with mock.patch.object(sys, "argv", ["start.py", "--quick"]):
+                    ret = start.main()
+                    self.assertEqual(ret, 0)
+                    mock_popen.assert_called_once()
+                    cmd = mock_popen.call_args[0][0]
+                    self.assertIn("40.0", cmd)
+
+    def test_main_quick_preflight_blocks_doomed_launch(self):
+        with mock.patch.object(start, "probe_engine", return_value=(False, "exceeds safe representable limit")):
+            with mock.patch("subprocess.Popen") as mock_popen:
+                with mock.patch.object(sys, "argv", ["start.py", "--quick"]):
+                    ret = start.main()
+                    self.assertEqual(ret, 1)
+                    mock_popen.assert_not_called()
 
 
 if __name__ == "__main__":

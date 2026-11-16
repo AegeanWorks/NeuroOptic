@@ -3,6 +3,7 @@
 import math
 import os
 import random
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -290,6 +291,30 @@ class ArgumentParsingTests(unittest.TestCase):
         finally:
             sys.argv = original
         self.assertEqual(eng.sham_seed, 7)
+
+
+class DryRunSafetyTests(unittest.TestCase):
+    """Dry-run must apply the same hardware validation the live path enforces."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.cwd = os.path.dirname(os.path.abspath(__file__))
+
+    def test_dry_run_rejects_impossible_frequency(self):
+        # 500 Hz exceeds the Nyquist ceiling of any consumer display.
+        proc = subprocess.run(
+            [sys.executable, "entrainment_engine.py", "--dry-run", "--freq", "500.0"],
+            capture_output=True, text=True, timeout=30, cwd=self.cwd)
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("safe representable limit", proc.stderr)
+
+    def test_dry_run_accepts_safe_frequency_and_reports_risk(self):
+        # 10 Hz is below the Nyquist ceiling of every consumer display.
+        proc = subprocess.run(
+            [sys.executable, "entrainment_engine.py", "--dry-run", "--freq", "10.0"],
+            capture_output=True, text=True, timeout=30, cwd=self.cwd)
+        self.assertEqual(proc.returncode, 0)
+        self.assertIn("photic risk", proc.stderr)
 
 
 if __name__ == "__main__":

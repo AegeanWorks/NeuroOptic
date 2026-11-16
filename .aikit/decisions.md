@@ -77,3 +77,10 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 ## License notice cleanup (2026-10-26)
 
 - The license-history notes were removed from README.md and COMMERCIAL.md: the project is offered only under the Aegean License 1.1 (AL-1.1), with commercial use under ACL-1.0.
+
+### ADR-007: 40 Hz Gamma on displays under 85 Hz fails loudly; dry-run and launcher start preflight with the engine's own validator
+- **Date**: 2026-11-16
+- **Status**: Accepted
+- **Context**: The engine always exited at window creation when target Hz exceeded monitor Nyquist ceiling, but start.py --quick and the launcher quick buttons advertised 40 Hz Gamma as 'safe' while the old dry-run validated nothing, so a 60 Hz machine (this workstation: 59 Hz) got a session that dies invisible in a fire-and-forget subprocess.
+- **Decision**: Never substitute the requested frequency silently: the engine dry-run now runs the same FrequencyManager validation the live path enforces, against the GLFW-detected monitor refresh rate (fallback 60 Hz with warning), and exits 1 with Why/Fix on violation. start.py and launcher.launch_engine preflight every launch through that dry-run and surface the remediation in the terminal or GUI. Renamed test_start.test_main_dry_run_gamma to test_main_dry_run (10 Hz Alpha, valid everywhere) and added preflight-block tests; ADR per PRINCIPLE-014 R8.
+- **Consequences**: One-click Gamma requires refresh >= 85 Hz and says so; Beta 20 Hz works down to 45 Hz, Alpha 10 Hz universal; launch adds one ~0.5s dry-run subprocess; no silent stimulus substitution in research conditions.

@@ -92,12 +92,13 @@ start.bat
 python start.py
 
 # 1-click start safe 40Hz Gamma entrainment directly (5s ramp):
+# fails with a Why/Fix remediation on displays under 85 Hz (Nyquist: 40 Hz needs refresh >= 85 Hz)
 python start.py --quick
 
-# 1-click start safe 10Hz Alpha entrainment directly (5s ramp):
+# 1-click start safe 10Hz Alpha entrainment directly (5s ramp, valid on every display):
 python start.py --alpha
 
-# Headless parameter & dependency validation:
+# Headless parameter & dependency validation (checks against your detected refresh rate):
 python start.py --dry-run
 ```
 

@@ -55,6 +55,23 @@ def build_quick_command(preset: str = "gamma", dry_run: bool = False) -> List[st
     return cmd
 
 
+def probe_engine(cmd: List[str], timeout: int = 30) -> Tuple[bool, str]:
+    """Validate an engine command with its own dry-run probe; return (ok, reason)."""
+    probe = list(cmd)
+    if "--dry-run" not in probe:
+        probe.append("--dry-run")
+    try:
+        proc = subprocess.run(probe, capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        return False, f"Engine dry-run probe timed out after {timeout}s."
+    except OSError as exc:
+        return False, str(exc)
+    if proc.returncode != 0:
+        lines = (proc.stderr or "").strip().splitlines()
+        return False, "\n".join(lines[-4:]) if lines else "Engine dry-run returned non-zero code."
+    return True, ""
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="NeuroOptic One-Click Starter - Instant visual entrainment launcher",
@@ -130,7 +147,19 @@ def main() -> int:
             print("[OK] Protocol and engine parameters verified successfully.")
             return 0
 
-        # Live engine session launch
+        # Live engine session launch: preflight with the engine's own dry-run so a
+        # display-incompatible session (e.g. 40 Hz Gamma on a 60 Hz monitor) fails
+        # loudly here instead of spawning an engine that dies at window creation.
+        ok, reason = probe_engine(cmd)
+        if not ok:
+            print_remediation_error(
+                what=f"{preset.upper()} quick-start preflight failed.",
+                why=reason,
+                fix="Pick a frequency your display can represent (target Hz must be <= "
+                    "refresh/2, e.g. use --alpha for 10 Hz) or use a display with a "
+                    "higher refresh rate (40 Hz needs refresh >= 85 Hz)."
+            )
+            return 1
         try:
             proc = subprocess.Popen(cmd)  # hygiene: allow fire-and-forget launch; the engine must outlive the launcher
             return 0

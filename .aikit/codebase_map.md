@@ -7,10 +7,10 @@
 
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `11`
-- **Total Classes**: `28`
-- **Total Top-Level Functions**: `8`
-- **Total Class Methods**: `118`
-- **Total Source Lines**: `2773`
+- **Total Classes**: `29`
+- **Total Top-Level Functions**: `10`
+- **Total Class Methods**: `123`
+- **Total Source Lines**: `2887`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`11` module(s))
@@ -78,7 +78,7 @@
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
 
-**Size**: `1125` lines (`45274` bytes)
+**Size**: `1166` lines (`47461` bytes)
 
 **Classes:**
 - `class FrequencyBand`
@@ -113,6 +113,7 @@
 **Functions:**
 - `def parse_arguments()`
 - `def build_engine_from_args(args)` - *Constructs an EntrainmentEngine from parsed CLI arguments or a declarative JSON protocol.*
+- `def detect_monitor_refresh_rate(default)` - *Queries the primary monitor refresh rate via GLFW without creating a window.*
 
 ---
 
@@ -139,12 +140,13 @@
 ### [`start.py`](start.py)
 > *NeuroOptic One-Click Starter (PRINCIPLE-011).*
 
-**Size**: `161` lines (`5643` bytes)
+**Size**: `190` lines (`7053` bytes)
 
 **Functions:**
 - `def check_dependencies()` - *Check if all runtime dependencies are importable.*
 - `def print_remediation_error(what, why, fix)` - *Print actionable remediation triad adhering to PRINCIPLE-011 R6.*
 - `def build_quick_command(preset, dry_run)` - *Construct safe entrainment command for one-click start.*
+- `def probe_engine(cmd, timeout)` - *Validate an engine command with its own dry-run probe; return (ok, reason).*
 - `def main()`
 
 ---
@@ -152,7 +154,7 @@
 ### [`test_entrainment_engine.py`](test_entrainment_engine.py)
 > *Regression shield for NeuroOptic's pure engine logic; no window or GL context is needed.*
 
-**Size**: `296` lines (`13351` bytes)
+**Size**: `321` lines (`14451` bytes)
 
 **Classes:**
 - `class FrequencyManagerTests`
@@ -193,6 +195,10 @@
   - Method `.test_build_engine_from_declarative_protocol()`
   - Method `.test_sham_seed_propagates_from_cli()`
   - Method `.test_sham_seed_propagates_from_declarative_protocol()`
+- `class DryRunSafetyTests` - *Dry-run must apply the same hardware validation the live path enforces.*
+  - Method `.setUpClass()`
+  - Method `.test_dry_run_rejects_impossible_frequency()`
+  - Method `.test_dry_run_accepts_safe_frequency_and_reports_risk()`
 
 ---
 
@@ -257,7 +263,7 @@
 ### [`test_start.py`](test_start.py)
 > *Unit tests for NeuroOptic One-Click Starter (start.py).*
 
-**Size**: `83` lines (`3042` bytes)
+**Size**: `102` lines (`4230` bytes)
 
 **Classes:**
 - `class StartScriptTests`
@@ -267,8 +273,10 @@
   - Method `.test_build_quick_command_alpha_dry_run()`
   - Method `.test_print_remediation_error_format()`
   - Method `.test_main_check_flag()`
-  - Method `.test_main_dry_run_gamma()`
+  - Method `.test_main_dry_run()`
+  - Method `.test_main_dry_run_gamma_blocked_below_85hz()`
   - Method `.test_main_missing_dependencies_exits_one()`
   - Method `.test_main_quick_popen_invoked()`
+  - Method `.test_main_quick_preflight_blocks_doomed_launch()`
 
 ---

@@ -9,3 +9,4 @@ Persisted state carries a format version. A loader refuses a version it does not
 without modifying or quarantining that file; older versions migrate when a migration exists.
 
 ## Rules
+- **G-001** (delegated-by-user-2026-11-16): G-project waiver (delegated by user 2026-11-16, agent choice recorded in checkpoint): personal project - never ask a human for a UI review; the working agent must verify the running surface itself (headless suite + ui verify) before ui finish.

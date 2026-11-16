@@ -29,7 +29,7 @@ from core.protocol import (
     StimulationMode,
     WaveformType,
 )
-from core.safety import validate_hardware_limits
+from core.safety import calculate_photic_risk, validate_hardware_limits
 
 import glfw
 import numpy as np
@@ -1114,11 +1114,52 @@ def build_engine_from_args(args) -> Tuple[EntrainmentEngine, bool]:
     return engine, bool(getattr(args, 'dry_run', False))
 
 
+def detect_monitor_refresh_rate(default: int = 60) -> int:
+    """
+    Queries the primary monitor refresh rate via GLFW without creating a window.
+    Falls back to `default` (with a warning) when GLFW cannot answer, e.g. headless runs.
+    """
+    try:
+        if not glfw.init():
+            logger.warning(f"GLFW init failed; assuming {default} Hz refresh rate.")
+            return default
+        try:
+            monitor = glfw.get_primary_monitor()
+            mode = glfw.get_video_mode(monitor) if monitor else None
+        finally:
+            glfw.terminate()
+        if mode and mode.refresh_rate > 1:
+            return int(mode.refresh_rate)
+    except Exception as exc:
+        logger.warning(f"Could not detect monitor refresh rate ({exc}); assuming {default} Hz.")
+        return default
+    logger.warning(f"Could not detect monitor refresh rate; assuming {default} Hz.")
+    return default
+
+
 if __name__ == "__main__":
     args = parse_arguments()
     engine, is_dry_run = build_engine_from_args(args)
     if is_dry_run:
-        logger.info(f"DRY RUN: Validated {engine.target_freq} Hz, waveform={engine.waveform.name}, mode={engine.mode.name}")
+        # Dry-run is a safety probe: it applies the same frequency validation the live
+        # path enforces at window creation (Nyquist ceiling, duty-cycle symmetry),
+        # against the detected monitor refresh rate, and reports the photic risk tier.
+        dry_run_refresh_hz = detect_monitor_refresh_rate()
+        allow_zero = (engine.sham_type == ShamType.STATIC)
+        try:
+            engine.target_freq, engine.waveform = FrequencyManager.validate_frequency(
+                engine.target_freq, dry_run_refresh_hz, engine.waveform, allow_zero=allow_zero)
+            if engine.mode == StimulationMode.SPLIT_HEMIFIELD and engine.right_freq > 0:
+                engine.right_freq, engine.waveform_right = FrequencyManager.validate_frequency(
+                    engine.right_freq, dry_run_refresh_hz, engine.waveform_right, allow_zero=allow_zero)
+        except ValueError as exc:
+            logger.error(
+                f"DRY RUN failed validation.\nWhy: {exc}\n"
+                f"Fix: lower the target frequency or run on a display with a higher refresh rate.")
+            sys.exit(1)
+        risk = calculate_photic_risk(engine.target_freq, engine.waveform)
+        logger.info(f"DRY RUN: Validated {engine.target_freq} Hz, waveform={engine.waveform.name}, "
+                    f"mode={engine.mode.name}, photic risk={risk.tier.name} ({risk.score:.2f})")
         sys.exit(0)
 
     engine.initialize_hardware()

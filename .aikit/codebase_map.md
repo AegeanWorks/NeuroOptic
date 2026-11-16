@@ -9,8 +9,8 @@
 - **Total Python Modules**: `8`
 - **Total Classes**: `24`
 - **Total Top-Level Functions**: `4`
-- **Total Class Methods**: `82`
-- **Total Source Lines**: `2205`
+- **Total Class Methods**: `86`
+- **Total Source Lines**: `2229`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`8` module(s))
@@ -117,16 +117,20 @@
 ---
 
 ### [`launcher.py`](launcher.py)
-**Size**: `242` lines (`14448` bytes)
+**Size**: `266` lines (`15296` bytes)
 
 **Classes:**
 - `class NeuroOpticLauncher`
-  - Method `.__init__(root)`
+  - Method `.__init__(root, headless)`
   - Method `.create_group_frame(parent, title)`
   - Method `.create_help_btn(parent, message)`
+  - Method `.report_error(title, message)`
+  - Method `.report_warning(title, message)`
   - Method `.on_preset_change(choice)`
-  - Method `._parse_float(raw, label, min_value, max_value)`
+  - Method `.update_safety_evaluation(*args)`
+  - Method `._parse_float(raw, label, min_val, max_val)`
   - Method `.launch_engine()`
+  - Method `.stop_engine()`
 
 ---
 

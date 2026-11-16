@@ -1,7 +1,7 @@
 # Codebase Map & Symbol Catalog 🗺️
 
 > **AUTO-GENERATED & VERIFIED BY `scripts/update_knowledge_base.py`**
-> This document provides an automated, up-to-date registry of all modules, classes, and exported functions across this repository.
+> This document catalogues Python modules, classes, and exported functions. See Map Coverage for any stack it does not index.
 
 ---
 
@@ -9,8 +9,12 @@
 - **Total Python Modules**: `3`
 - **Total Classes**: `15`
 - **Total Top-Level Functions**: `1`
-- **Total Class Methods**: `52`
-- **Total Source Lines**: `1453`
+- **Total Class Methods**: `56`
+- **Total Source Lines**: `1572`
+
+## 🧭 Map Coverage
+- **Indexed**: python (`3` module(s))
+- **Not indexed by this map**: none (no non-Python source files were found)
 
 ---
 
@@ -19,7 +23,7 @@
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
 
-**Size**: `1086` lines (`43782` bytes)
+**Size**: `1122` lines (`45722` bytes)
 
 **Classes:**
 - `class WaveformType`
@@ -60,7 +64,7 @@
 ---
 
 ### [`launcher.py`](launcher.py)
-**Size**: `186` lines (`11757` bytes)
+**Size**: `242` lines (`14448` bytes)
 
 **Classes:**
 - `class NeuroOpticLauncher`
@@ -68,6 +72,7 @@
   - Method `.create_group_frame(parent, title)`
   - Method `.create_help_btn(parent, message)`
   - Method `.on_preset_change(choice)`
+  - Method `._parse_float(raw, label, min_value, max_value)`
   - Method `.launch_engine()`
 
 ---
@@ -75,7 +80,7 @@
 ### [`test_entrainment_engine.py`](test_entrainment_engine.py)
 > *Regression shield for NeuroOptic's pure engine logic; no window or GL context is needed.*
 
-**Size**: `181` lines (`8456` bytes)
+**Size**: `208` lines (`9984` bytes)
 
 **Classes:**
 - `class FrequencyManagerTests`
@@ -101,11 +106,14 @@
   - Method `.test_static_sham_zeroes_frequency()`
   - Method `.test_static_sham_zeroes_both_hemifields()`
   - Method `.test_detune_sham_shifts_frequency_deterministically()`
+  - Method `.test_static_sham_normalizes_to_sine_hold()`
+  - Method `.test_allow_zero_normalizes_negative_zero()`
 - `class CalibrationLoaderTests`
   - Method `._renderer_without_gl()`
   - Method `._write(text)`
   - Method `.test_malformed_row_is_warned_and_skipped()`
   - Method `.test_file_without_usable_rows_is_reported()`
+  - Method `.test_malformed_first_data_row_without_header_warns()`
 - `class ArgumentParsingTests`
   - Method `.test_defaults_match_documented_values()`
 

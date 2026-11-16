@@ -2,10 +2,10 @@
   "version": 1,
   "active_task": {
     "task_id": "neurooptic-subagent-ui-mechanics",
-    "last_phase": "phase 4",
-    "active_phase": 4,
+    "last_phase": "phase 5",
+    "active_phase": 5,
     "status": "in_progress",
-    "updated_at": 1794844875.8851845,
+    "updated_at": 1794844939.4542587,
     "owner": "antigravity:subagent-ui",
     "started_by": "antigravity:subagent-ui",
     "continuations": [],
@@ -17,18 +17,6 @@
     ]
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "Superseded by run-2: the only pending rule finding (bare except at line 368) was fixed by 9a10746 and is absent from HEAD; no code action needed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793293522.2939966,
-      "timestamp_str": "2026-10-29 20:05:22",
-      "agent": "opencode:reforge-followup",
-      "continued_from": "opencode"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "completed",
@@ -292,6 +280,24 @@
       "status": "in_progress",
       "timestamp": 1794844875.8851845,
       "timestamp_str": "2026-11-16 19:01:15",
+      "agent": "antigravity:subagent-ui",
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-subagent-ui-mechanics",
+      "phase": "phase 5",
+      "phase_num": 5,
+      "description": "[milestone 5/5] Record ADR-004 and verify strict delivery readiness",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794844939.4542587,
+      "timestamp_str": "2026-11-16 19:02:19",
       "agent": "antigravity:subagent-ui",
       "checklists": "passed",
       "workspaces": [

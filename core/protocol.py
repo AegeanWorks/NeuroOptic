@@ -93,6 +93,8 @@ class EntrainmentProtocol:
     def from_dict(cls, data: Dict[str, Any]) -> "EntrainmentProtocol":
         """Reconstruct an EntrainmentProtocol from a dictionary with case-insensitive enums."""
         wf_name = str(data.get("waveform", "sine")).upper()
+        if wf_name == "AM":
+            wf_name = "AM_CARRIER"
         mode_name = str(data.get("mode", "full_screen")).upper()
         if mode_name == "FULL":
             mode_name = "FULL_SCREEN"
@@ -106,6 +108,8 @@ class EntrainmentProtocol:
             mode_name = "SPLIT_HEMIFIELD"
 
         sham_name = str(data.get("sham", "none")).upper()
+        if sham_name == "JITTER":
+            sham_name = "PHASE_JITTER"
 
         return cls(
             target_freq=float(data.get("target_freq", 40.0)),
@@ -152,6 +156,8 @@ class EntrainmentProtocol:
         ]
         if self.right_freq is not None and self.right_freq > 0:
             cmd.extend(["--freq-right", str(self.right_freq)])
+        if self.sham_seed is not None:
+            cmd.extend(["--sham-seed", str(self.sham_seed)])
         if self.calibration_file:
             cmd.extend(["--calib-file", self.calibration_file])
         return cmd

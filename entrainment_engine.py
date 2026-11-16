@@ -963,6 +963,13 @@ def parse_arguments():
     )
 
     parser.add_argument(
+        '--sham-seed',
+        type=int,
+        default=None,
+        help='Deterministic seed for sham modes (replayable research conditions). Defaults to a random seed.'
+    )
+
+    parser.add_argument(
         '--gamma',
         type=float,
         default=1.0,
@@ -1052,6 +1059,7 @@ def build_engine_from_args(args) -> Tuple[EntrainmentEngine, bool]:
         ramp = proto.ramp
         duration = proto.duration
         sham = proto.sham
+        sham_seed = proto.sham_seed
         gamma = proto.gamma
         brightness = proto.brightness
         phase = proto.phase
@@ -1078,6 +1086,7 @@ def build_engine_from_args(args) -> Tuple[EntrainmentEngine, bool]:
         ramp = args.ramp
         duration = args.duration
         sham = sham_map[args.sham]
+        sham_seed = args.sham_seed
         gamma = args.gamma
         brightness = args.brightness
         phase = args.phase
@@ -1093,6 +1102,7 @@ def build_engine_from_args(args) -> Tuple[EntrainmentEngine, bool]:
         ramp_duration=ramp,
         session_duration=duration,
         sham_type=sham,
+        sham_seed=sham_seed,
         gamma=gamma,
         brightness=brightness,
         phase_offset=phase,

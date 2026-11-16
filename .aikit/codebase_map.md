@@ -7,10 +7,10 @@
 
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `11`
-- **Total Classes**: `27`
+- **Total Classes**: `28`
 - **Total Top-Level Functions**: `8`
-- **Total Class Methods**: `114`
-- **Total Source Lines**: `2713`
+- **Total Class Methods**: `118`
+- **Total Source Lines**: `2773`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`11` module(s))
@@ -30,7 +30,7 @@
 ### [`core/protocol.py`](core/protocol.py)
 > *Declarative protocol specification and parameter models for NeuroOptic entrainment.*
 
-**Size**: `157` lines (`5367` bytes)
+**Size**: `163` lines (`5603` bytes)
 
 **Classes:**
 - `class WaveformType`
@@ -78,7 +78,7 @@
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
 
-**Size**: `1115` lines (`44969` bytes)
+**Size**: `1125` lines (`45274` bytes)
 
 **Classes:**
 - `class FrequencyBand`
@@ -152,7 +152,7 @@
 ### [`test_entrainment_engine.py`](test_entrainment_engine.py)
 > *Regression shield for NeuroOptic's pure engine logic; no window or GL context is needed.*
 
-**Size**: `266` lines (`12073` bytes)
+**Size**: `296` lines (`13351` bytes)
 
 **Classes:**
 - `class FrequencyManagerTests`
@@ -191,6 +191,8 @@
   - Method `.test_preset_theta_sets_frequency()`
   - Method `.test_dry_run_flag_enabled()`
   - Method `.test_build_engine_from_declarative_protocol()`
+  - Method `.test_sham_seed_propagates_from_cli()`
+  - Method `.test_sham_seed_propagates_from_declarative_protocol()`
 
 ---
 
@@ -222,7 +224,7 @@
 ### [`test_mechanics.py`](test_mechanics.py)
 > *Unit test suite for NeuroOptic headless mechanics, protocol schemas, and safety validation.*
 
-**Size**: `172` lines (`6752` bytes)
+**Size**: `186` lines (`7396` bytes)
 
 **Classes:**
 - `class ProtocolModelTests`
@@ -246,6 +248,9 @@
 - `class ProtocolDegrationTests` - *Controller must apply the degraded waveform so risk matches execution.*
   - Method `.test_validation_applies_duty_cycle_degradation_to_protocol()`
   - Method `.test_validation_keeps_exactly_representable_square()`
+- `class ShamSeedReproducibilityTests` - *Sham seed must survive a controller subprocess launch for replayable sham conditions.*
+  - Method `.test_protocol_cli_args_include_explicit_sham_seed()`
+  - Method `.test_protocol_cli_args_omit_unset_sham_seed()`
 
 ---
 

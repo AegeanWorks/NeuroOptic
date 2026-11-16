@@ -168,5 +168,19 @@ class ProtocolDegrationTests(unittest.TestCase):
         self.assertTrue(assessment.requires_human_confirmation)
 
 
+class ShamSeedReproducibilityTests(unittest.TestCase):
+    """Sham seed must survive a controller subprocess launch for replayable sham conditions."""
+
+    def test_protocol_cli_args_include_explicit_sham_seed(self):
+        proto = EntrainmentProtocol(target_freq=40.0, sham=ShamType.PHASE_JITTER, sham_seed=42)
+        args = proto.to_cli_args()
+        idx = args.index("--sham-seed")
+        self.assertEqual(str(args[idx + 1]), "42")
+
+    def test_protocol_cli_args_omit_unset_sham_seed(self):
+        proto = EntrainmentProtocol(target_freq=40.0, sham=ShamType.PHASE_JITTER)
+        self.assertNotIn("--sham-seed", proto.to_cli_args())
+
+
 if __name__ == "__main__":
     unittest.main()

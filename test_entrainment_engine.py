@@ -261,6 +261,36 @@ class ArgumentParsingTests(unittest.TestCase):
         self.assertEqual(eng.session_duration, 120.0)
         self.assertEqual(eng.right_freq, 12.0)
 
+    def test_sham_seed_propagates_from_cli(self):
+        original = sys.argv
+        sys.argv = ["entrainment_engine.py", "--sham", "detune", "--sham-seed", "42"]
+        try:
+            args = engine.parse_arguments()
+            eng, _ = engine.build_engine_from_args(args)
+        finally:
+            sys.argv = original
+        self.assertEqual(eng.sham_seed, 42)
+        self.assertEqual(eng.target_freq, engine.EntrainmentEngine(
+            target_freq=40.0, waveform=engine.WaveformType.SINE,
+            sham_type=engine.ShamType.DETUNE, sham_seed=42).target_freq)
+
+    def test_sham_seed_propagates_from_declarative_protocol(self):
+        import json
+        proto_data = {"target_freq": 40.0, "sham": "jitter", "sham_seed": 7}
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as tmp:
+            json.dump(proto_data, tmp)
+            tmp_path = tmp.name
+        self.addCleanup(os.unlink, tmp_path)
+
+        original = sys.argv
+        sys.argv = ["entrainment_engine.py", "--protocol", tmp_path, "--dry-run"]
+        try:
+            args = engine.parse_arguments()
+            eng, _ = engine.build_engine_from_args(args)
+        finally:
+            sys.argv = original
+        self.assertEqual(eng.sham_seed, 7)
+
 
 if __name__ == "__main__":
     unittest.main()

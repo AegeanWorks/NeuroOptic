@@ -202,6 +202,64 @@ class ArgumentParsingTests(unittest.TestCase):
         self.assertEqual(args.waveform, "sine")
         self.assertEqual(args.mode, "full")
         self.assertEqual(args.sham, "none")
+        self.assertFalse(args.dry_run)
+        self.assertIsNone(args.protocol)
+
+    def test_preset_theta_sets_frequency(self):
+        original = sys.argv
+        sys.argv = ["entrainment_engine.py", "--preset", "theta"]
+        try:
+            args = engine.parse_arguments()
+            eng, _ = engine.build_engine_from_args(args)
+        finally:
+            sys.argv = original
+        self.assertEqual(eng.target_freq, 6.0)
+
+    def test_dry_run_flag_enabled(self):
+        original = sys.argv
+        sys.argv = ["entrainment_engine.py", "--dry-run", "--freq", "25.0"]
+        try:
+            args = engine.parse_arguments()
+            eng, is_dry = engine.build_engine_from_args(args)
+        finally:
+            sys.argv = original
+        self.assertTrue(is_dry)
+        self.assertEqual(eng.target_freq, 25.0)
+
+    def test_build_engine_from_declarative_protocol(self):
+        import json
+        proto_data = {
+            "target_freq": 10.0,
+            "waveform": "square",
+            "mode": "split",
+            "duration": 120.0,
+            "ramp": 3.0,
+            "sham": "none",
+            "gamma": 2.2,
+            "brightness": 0.8,
+            "phase": 45.0,
+            "right_freq": 12.0,
+            "right_phase": 90.0
+        }
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as tmp:
+            json.dump(proto_data, tmp)
+            tmp_path = tmp.name
+        self.addCleanup(os.unlink, tmp_path)
+
+        original = sys.argv
+        sys.argv = ["entrainment_engine.py", "--protocol", tmp_path, "--dry-run"]
+        try:
+            args = engine.parse_arguments()
+            eng, is_dry = engine.build_engine_from_args(args)
+        finally:
+            sys.argv = original
+
+        self.assertTrue(is_dry)
+        self.assertEqual(eng.target_freq, 10.0)
+        self.assertEqual(eng.waveform, engine.WaveformType.SQUARE)
+        self.assertEqual(eng.mode, engine.StimulationMode.SPLIT_HEMIFIELD)
+        self.assertEqual(eng.session_duration, 120.0)
+        self.assertEqual(eng.right_freq, 12.0)
 
 
 if __name__ == "__main__":

@@ -7,10 +7,10 @@
 
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `8`
-- **Total Classes**: `27`
-- **Total Top-Level Functions**: `3`
-- **Total Class Methods**: `79`
-- **Total Source Lines**: `2119`
+- **Total Classes**: `24`
+- **Total Top-Level Functions**: `4`
+- **Total Class Methods**: `82`
+- **Total Source Lines**: `2205`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`8` module(s))
@@ -78,12 +78,9 @@
 ### [`entrainment_engine.py`](entrainment_engine.py)
 > *NeuroOptic - Generalized Visual Entrainment Engine (Gamma-Optimized)*
 
-**Size**: `1122` lines (`45722` bytes)
+**Size**: `1150` lines (`46804` bytes)
 
 **Classes:**
-- `class WaveformType`
-- `class ShamType`
-- `class StimulationMode`
 - `class FrequencyBand`
 - `class FrequencyManager` - *Manages frequency bands and validates targets against hardware limits.*
   - Method `.get_band_name(frequency)`
@@ -115,6 +112,7 @@
 
 **Functions:**
 - `def parse_arguments()`
+- `def build_engine_from_args(args)` - *Constructs an EntrainmentEngine from parsed CLI arguments or a declarative JSON protocol.*
 
 ---
 
@@ -135,7 +133,7 @@
 ### [`test_entrainment_engine.py`](test_entrainment_engine.py)
 > *Regression shield for NeuroOptic's pure engine logic; no window or GL context is needed.*
 
-**Size**: `208` lines (`9984` bytes)
+**Size**: `266` lines (`12073` bytes)
 
 **Classes:**
 - `class FrequencyManagerTests`
@@ -171,6 +169,9 @@
   - Method `.test_malformed_first_data_row_without_header_warns()`
 - `class ArgumentParsingTests`
   - Method `.test_defaults_match_documented_values()`
+  - Method `.test_preset_theta_sets_frequency()`
+  - Method `.test_dry_run_flag_enabled()`
+  - Method `.test_build_engine_from_declarative_protocol()`
 
 ---
 

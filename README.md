@@ -32,6 +32,7 @@ NeuroOptic/
 ├── README.md
 ├── assets/
 ├── COMMERCIAL.md
+├── core/                      <- decoupled protocol mechanics & safety gates (ADR-271)
 ├── LICENSE
 ├── LICENSES/                 <- REUSE license texts
 ├── REUSE.toml                <- Machine-readable SPDX metadata
@@ -39,6 +40,7 @@ NeuroOptic/
 ├── launcher.py                <- customtkinter GUI controller
 ├── requirements.txt
 ├── test_entrainment_engine.py <- unit tests for the engine's pure logic
+├── test_mechanics.py          <- unit tests for headless protocol mechanics
 └── .aikit/                    <- this project's memory: record, ledger, decisions, map
 ```
 
@@ -106,6 +108,12 @@ python entrainment_engine.py --freq 40.0 --sham detune
 
 # Session Control (10 min session, 5s ramp-up)
 python entrainment_engine.py --duration 600 --ramp 5.0
+
+# Declarative Protocol Execution (Subagent & Research automation)
+python entrainment_engine.py --protocol protocol.json
+
+# Headless Protocol Validation (Dry-run without display)
+python entrainment_engine.py --protocol protocol.json --dry-run
 ```
 
 <!-- aegean:brand-assets:start -->

@@ -21,6 +21,14 @@ import argparse
 from enum import Enum, auto
 from dataclasses import dataclass
 from typing import Optional, Tuple
+import json
+
+from core.protocol import (
+    EntrainmentProtocol,
+    ShamType,
+    StimulationMode,
+    WaveformType,
+)
 
 import glfw
 import numpy as np
@@ -33,33 +41,6 @@ logging.basicConfig(
     format='%(asctime)s - [NeuroOptic] - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-
-class WaveformType(Enum):
-    SQUARE = auto()
-    SINE = auto()
-    AM_CARRIER = auto()
-    TRIANGLE = auto()
-
-
-class ShamType(Enum):
-    NONE = auto()
-    DETUNE = auto()  # Slight frequency shift (e.g. 40Hz -> 38.5Hz)
-    LOW_AMP = auto()  # Low amplitude oscillation
-    PHASE_JITTER = auto()  # Random micro phase jitter
-    STATIC = auto()  # Non-oscillating light
-
-
-class StimulationMode(Enum):
-    FULL_SCREEN = auto()
-    PERIPHERAL_RING = auto()
-    HEMIFIELD_LEFT = auto()
-    HEMIFIELD_RIGHT = auto()
-    SPLIT_HEMIFIELD = auto() # Left/Right independent
-    QUADRANT_TL = auto()  # Top-Left
-    QUADRANT_TR = auto()  # Top-Right
-    QUADRANT_BL = auto()  # Bottom-Left
-    QUADRANT_BR = auto()  # Bottom-Right
 
 
 @dataclass
@@ -978,8 +959,20 @@ def parse_arguments():
     parser.add_argument(
         '--preset',
         type=str,
-        choices=['delta', 'alpha', 'beta', 'gamma', 'high_gamma'],
+        choices=['delta', 'theta', 'alpha', 'beta', 'gamma', 'high_gamma'],
         help='Use a predefined frequency band preset (Overrides --freq)'
+    )
+
+    parser.add_argument(
+        '--protocol',
+        type=str,
+        help='Path to a declarative JSON protocol file (overrides individual arguments)'
+    )
+
+    parser.add_argument(
+        '--dry-run',
+        action='store_true',
+        help='Validate parameters and log configuration plan without initializing display window'
     )
 
     parser.add_argument(
@@ -1055,10 +1048,8 @@ def parse_arguments():
     return parser.parse_args()
 
 
-if __name__ == "__main__":
-    args = parse_arguments()
-
-    # Map string arg to Enum
+def build_engine_from_args(args) -> Tuple[EntrainmentEngine, bool]:
+    """Constructs an EntrainmentEngine from parsed CLI arguments or a declarative JSON protocol."""
     wf_map = {
         'sine': WaveformType.SINE,
         'square': WaveformType.SQUARE,
@@ -1086,37 +1077,74 @@ if __name__ == "__main__":
         'static': ShamType.STATIC
     }
 
-    # Preset Logic
-    target_freq = args.freq
-    if args.preset:
-        presets = {
-            'delta': 2.0,
-            'alpha': 10.0,
-            'beta': 20.0,
-            'gamma': 40.0,
-            'high_gamma': 80.0
-        }
-        target_freq = presets[args.preset]
-        print(f"Loaded Preset: {args.preset.upper()} ({target_freq} Hz)")
+    if getattr(args, 'protocol', None):
+        with open(args.protocol, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        proto = EntrainmentProtocol.from_dict(data)
+        target_freq = proto.target_freq
+        waveform = proto.waveform
+        mode = proto.mode
+        ramp = proto.ramp
+        duration = proto.duration
+        sham = proto.sham
+        gamma = proto.gamma
+        brightness = proto.brightness
+        phase = proto.phase
+        freq_right = proto.right_freq
+        phase_right = proto.right_phase
+        calib_file = proto.calibration_file
+        compat = proto.compat_mode
+    else:
+        target_freq = args.freq
+        if getattr(args, 'preset', None):
+            presets = {
+                'delta': 2.0,
+                'theta': 6.0,
+                'alpha': 10.0,
+                'beta': 20.0,
+                'gamma': 40.0,
+                'high_gamma': 80.0
+            }
+            target_freq = presets[args.preset]
+            logger.info(f"Loaded Preset: {args.preset.upper()} ({target_freq} Hz)")
 
-    # Handle Quadrant args if user passed generic 'quad' (optional expansion) or specific
-    mode = mode_map.get(args.mode, StimulationMode.FULL_SCREEN)
+        waveform = wf_map[args.waveform]
+        mode = mode_map.get(args.mode, StimulationMode.FULL_SCREEN)
+        ramp = args.ramp
+        duration = args.duration
+        sham = sham_map[args.sham]
+        gamma = args.gamma
+        brightness = args.brightness
+        phase = args.phase
+        freq_right = args.freq_right
+        phase_right = args.phase_right
+        calib_file = args.calib_file
+        compat = args.compat
 
     engine = EntrainmentEngine(
         target_freq=target_freq,
-        waveform=wf_map[args.waveform],
+        waveform=waveform,
         mode=mode,
-        ramp_duration=args.ramp,
-        session_duration=args.duration,
-        sham_type=sham_map[args.sham],
-        gamma=args.gamma,
-        brightness=args.brightness,
-        phase_offset=args.phase,
-        right_freq=args.freq_right,
-        right_phase_offset=args.phase_right,
-        calibration_file=args.calib_file,
-        compat_mode=args.compat
+        ramp_duration=ramp,
+        session_duration=duration,
+        sham_type=sham,
+        gamma=gamma,
+        brightness=brightness,
+        phase_offset=phase,
+        right_freq=freq_right,
+        right_phase_offset=phase_right,
+        calibration_file=calib_file,
+        compat_mode=compat
     )
+    return engine, bool(getattr(args, 'dry_run', False))
+
+
+if __name__ == "__main__":
+    args = parse_arguments()
+    engine, is_dry_run = build_engine_from_args(args)
+    if is_dry_run:
+        logger.info(f"DRY RUN: Validated {engine.target_freq} Hz, waveform={engine.waveform.name}, mode={engine.mode.name}")
+        sys.exit(0)
 
     engine.initialize_hardware()
     engine.run()

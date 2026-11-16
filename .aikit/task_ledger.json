@@ -5,7 +5,7 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794844235.2752943,
+    "updated_at": 1794844447.6439867,
     "owner": "antigravity:subagent-ui",
     "started_by": "antigravity:subagent-ui",
     "continuations": [],
@@ -17,17 +17,6 @@
     ]
   },
   "checkpoints": [
-    {
-      "task_id": "neurooptic-ui-evidence",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[2/2] Phase 4: checklists: passed; 4/4 gates; UI task reviewed by human:user",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793293363.988979,
-      "timestamp_str": "2026-10-29 20:02:43",
-      "agent": "opencode:reforge-followup"
-    },
     {
       "task_id": "neurooptic-ui-evidence",
       "phase": "completed",
@@ -270,6 +259,24 @@
       "status": "in_progress",
       "timestamp": 1794844235.2752943,
       "timestamp_str": "2026-11-16 18:50:35",
+      "agent": "antigravity:subagent-ui",
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "NeuroOptic",
+          "path": "projects/NeuroOptic"
+        }
+      ]
+    },
+    {
+      "task_id": "neurooptic-subagent-ui-mechanics",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[milestone 2/5] Add declarative protocol CLI and dry-run mode",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794844447.6439867,
+      "timestamp_str": "2026-11-16 18:54:07",
       "agent": "antigravity:subagent-ui",
       "checklists": "passed",
       "workspaces": [
